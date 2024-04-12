@@ -1,40 +1,69 @@
-using JetBrains.Annotations;
-using System.Collections;
+
+using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ChipStack : MonoBehaviour
 {
-    private BaseHexagon baseHexagon = null;
+    private BaseHexagon currentBaseHexagon = null;
     private Vector3 originalPosition;
     private Stack<ChipBlock> stackChipBlock;
-    private float mZCoord;
     private Vector3 mOffset;
+    private float mZCoord;
     private bool isDragging = false;
+
+    private void Awake()
+    {
+        originalPosition = transform.position;
+    }
 
     private void OnMouseDown()
     {
         mZCoord = Camera.main.WorldToScreenPoint(transform.position).y;
-        mOffset = transform.position - GetMouseAsWorldPoint();
+        mOffset = transform.position - GetMouseAsWorldPoint(); 
     }
 
     private void OnMouseDrag()
     {
-        //Ray ray = new Ray(transform.position, -Vector3.up);
+        isDragging = true;
+
+        Ray ray = new Ray(transform.position, -Vector3.up);
+        Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red);
+
+        if (Physics.Raycast(ray, out RaycastHit hit))
+        {
+            BaseHexagon hexagon = hit.collider.GetComponent<BaseHexagon>();
+            if (hexagon != null)
+            {
+                
+            }
+   
+        }
+
         isDragging = true;
         Vector3 newPosition = GetMouseAsWorldPoint() + mOffset;
-
-        float distanceFromInitialTouch = Mathf.Abs(newPosition.z - transform.position.z);
-
-        AnimationCurve lerpCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 2f);
-
-        float lerpFactor = lerpCurve.Evaluate(Mathf.Clamp01(distanceFromInitialTouch / 10f)); 
-
-        newPosition.z = Mathf.Lerp(transform.position.z, newPosition.z, lerpFactor);
 
         transform.position = new Vector3(newPosition.x, 5, newPosition.z);
     }
 
+    private void OnMouseUp()
+    {
+        RaycastHit hit;
+        Ray ray = new Ray(transform.position, -Vector3.up);
+
+        if(Physics.Raycast(ray, out hit))
+        {
+            BaseHexagon hexagon = hit.collider.GetComponent<BaseHexagon>();
+            if(hexagon != null)
+            {
+                currentBaseHexagon = hexagon;
+                return;
+            }
+        }
+
+        MoveToOriginalPosition();
+
+    }
     private Vector3 GetMouseAsWorldPoint()
     {
         Vector3 mousePosition = Input.mousePosition;
@@ -43,13 +72,18 @@ public class ChipStack : MonoBehaviour
     }
     public BaseHexagon GetCurrentHexagon()
     {
-        return this.baseHexagon;
+        return this.currentBaseHexagon;
     }
 
     public void SetCurrentHexagon(BaseHexagon hexagon)
     {
         transform.position = hexagon.transform.position;
         transform.SetParent(hexagon.transform);
+    }
+
+    public void MoveToOriginalPosition()
+    {
+        transform.DOMove(originalPosition, 1f).SetEase(Ease.OutExpo);
     }
 }
 [System.Serializable]
