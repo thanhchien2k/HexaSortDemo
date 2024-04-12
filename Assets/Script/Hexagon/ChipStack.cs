@@ -20,7 +20,7 @@ public class ChipStack : MonoBehaviour
     private void OnMouseDown()
     {
         mZCoord = Camera.main.WorldToScreenPoint(transform.position).y;
-        mOffset = transform.position - GetMouseAsWorldPoint(); 
+        mOffset = transform.position - GetMouseAsWorldPoint();
     }
 
     private void OnMouseDrag()
@@ -41,9 +41,9 @@ public class ChipStack : MonoBehaviour
         }
 
         isDragging = true;
-        Vector3 newPosition = GetMouseAsWorldPoint() + mOffset;
-
-        transform.position = new Vector3(newPosition.x, 5, newPosition.z);
+        //Vector3 newPosition = GetMouseAsWorldPoint() + mOffset;
+        Vector3 newPos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,Input.mousePosition.y,1f)); 
+        transform.position = newPos;
     }
 
     private void OnMouseUp()
@@ -57,12 +57,21 @@ public class ChipStack : MonoBehaviour
             if(hexagon != null)
             {
                 currentBaseHexagon = hexagon;
+                SnapToHexagon(currentBaseHexagon);
                 return;
             }
         }
 
         MoveToOriginalPosition();
 
+    }
+
+    private void SnapToHexagon(BaseHexagon hexagon)
+    {
+        transform.position = hexagon.transform.position + new Vector3(0, 0.2f, 0);
+        currentBaseHexagon = hexagon;
+        hexagon.GetComponent<BoxCollider>().enabled = false;
+        transform.SetParent(hexagon.transform);
     }
     private Vector3 GetMouseAsWorldPoint()
     {

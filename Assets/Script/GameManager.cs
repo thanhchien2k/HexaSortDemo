@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        maps = new();
         CreateMap();
     }
     private void CreateMap()
@@ -43,7 +44,7 @@ public class GameManager : MonoBehaviour
         {
             for (int j = 0; j < 4; j++)
             {
-                Instantiate(hexagonPrefabs, new Vector3(i * (offset.x + 0.1f), 0, j * (offset.z + 0.1f)), Quaternion.identity, mapRoot);
+                maps.Add(new Vector2Int(i,j), Instantiate(hexagonPrefabs, new Vector3(i * (offset.x + 0.1f), 0, j * (offset.z + 0.1f)), Quaternion.identity, mapRoot));
             }
         }
         //mapRoot.position = new Vector3(mapRoot.position.x, mapRoot.position.y, mapRoot.position.z - worldCenterPoint.z);
