@@ -11,7 +11,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] Vector3 offset;
     [SerializeField] private Transform mapRoot;
     Vector3 worldCenterPoint;
-
+    private Plane plane;
+    Vector3 mousePos;
+    Vector3 smothPos;
     private void Awake()
     {
         if(Instance == null)
@@ -28,14 +30,26 @@ public class GameManager : MonoBehaviour
            offset = hexagonPrefabs.GetComponent<Renderer>().bounds.size;
         }
 
-        worldCenterPoint = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width/2, Screen.height/2, 0f));
-
     }
 
     private void Start()
     {
+        plane = new Plane(Vector3.up,transform.position);
         maps = new();
         CreateMap();
+    }
+
+    void GetMousePosOnGrid()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if(plane.Raycast(ray,out var enter))
+        {
+            mousePos = ray.GetPoint(enter);
+            smothPos = mousePos;
+            mousePos.y = 0;
+            mousePos = Vector3Int.RoundToInt(mousePos);
+            
+        }
     }
     private void CreateMap()
     {
@@ -44,9 +58,14 @@ public class GameManager : MonoBehaviour
         {
             for (int j = 0; j < 4; j++)
             {
-                maps.Add(new Vector2Int(i,j), Instantiate(hexagonPrefabs, new Vector3(i * (offset.x + 0.1f), 0, j * (offset.z + 0.1f)), Quaternion.identity, mapRoot));
+                maps.Add(new Vector2Int(i,j), Instantiate(hexagonPrefabs, new Vector3(i , 0, j), Quaternion.identity));
             }
         }
         //mapRoot.position = new Vector3(mapRoot.position.x, mapRoot.position.y, mapRoot.position.z - worldCenterPoint.z);
+    }
+
+    private void Update()
+    {
+        GetMousePosOnGrid();
     }
 }
