@@ -5,28 +5,21 @@ using UnityEngine;
 
 public class ChipStack : MonoBehaviour
 {
+    [SerializeField] Vector3 offset;
+    [SerializeField] MeshCollider meshCollider;
     private BaseHexagon currentBaseHexagon = null;
     private Vector3 originalPosition;
     private Stack<ChipBlock> stackChipBlock;
-    private Vector3 mOffset;
-    private float mZCoord;
-    private bool isDragging = false;
+    public bool isOnGrid = false;
+
 
     private void Awake()
     {
         originalPosition = transform.position;
     }
 
-    private void OnMouseDown()
+    public void GetBaseHexagon()
     {
-        mZCoord = Camera.main.WorldToScreenPoint(transform.position).y;
-        mOffset = transform.position - GetMouseAsWorldPoint();
-    }
-
-    private void OnMouseDrag()
-    {
-        isDragging = true;
-
         Ray ray = new Ray(transform.position, -Vector3.up);
         Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red);
 
@@ -35,64 +28,74 @@ public class ChipStack : MonoBehaviour
             BaseHexagon hexagon = hit.collider.GetComponent<BaseHexagon>();
             if (hexagon != null)
             {
+                if (!hexagon.isPlaceable) {
+                    if (currentBaseHexagon != null)
+                    {
+                        currentBaseHexagon.SetOriginal();
+                        currentBaseHexagon = null;
+                    }
+                    return;
+                } 
                 
+                if(currentBaseHexagon == null)
+                {
+                    currentBaseHexagon = hexagon;
+                    currentBaseHexagon.SetHeightLight();
+                }
+                else if(currentBaseHexagon != hexagon)
+                {
+                    currentBaseHexagon.SetOriginal();
+                    currentBaseHexagon = hexagon;
+                    currentBaseHexagon.SetHeightLight();
+                }
             }
-   
-        }
-
-        isDragging = true;
-        //Vector3 newPosition = GetMouseAsWorldPoint() + mOffset;
-        Vector3 newPos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,Input.mousePosition.y,1f)); 
-        transform.position = newPos;
-    }
-
-    private void OnMouseUp()
-    {
-        RaycastHit hit;
-        Ray ray = new Ray(transform.position, -Vector3.up);
-
-        if(Physics.Raycast(ray, out hit))
-        {
-            BaseHexagon hexagon = hit.collider.GetComponent<BaseHexagon>();
-            if(hexagon != null)
+            else
             {
-                currentBaseHexagon = hexagon;
-                SnapToHexagon(currentBaseHexagon);
-                return;
+                if (currentBaseHexagon != null)
+                {
+                    currentBaseHexagon.SetOriginal();
+                    currentBaseHexagon = null;
+                }
             }
         }
 
-        MoveToOriginalPosition();
 
     }
 
-    private void SnapToHexagon(BaseHexagon hexagon)
-    {
-        transform.position = hexagon.transform.position + new Vector3(0, 0.2f, 0);
-        currentBaseHexagon = hexagon;
-        hexagon.GetComponent<BoxCollider>().enabled = false;
-        transform.SetParent(hexagon.transform);
-    }
-    private Vector3 GetMouseAsWorldPoint()
-    {
-        Vector3 mousePosition = Input.mousePosition;
-        mousePosition.z = mZCoord;
-        return Camera.main.ScreenToWorldPoint(mousePosition);
-    }
     public BaseHexagon GetCurrentHexagon()
     {
         return this.currentBaseHexagon;
     }
 
-    public void SetCurrentHexagon(BaseHexagon hexagon)
-    {
-        transform.position = hexagon.transform.position;
-        transform.SetParent(hexagon.transform);
-    }
-
     public void MoveToOriginalPosition()
     {
         transform.DOMove(originalPosition, 1f).SetEase(Ease.OutExpo);
+    }
+
+    public void DrawRay()
+    {
+        Ray ray = new Ray(transform.position, -Vector3.up);
+        Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red);
+    }
+
+    public void PutOnHexagonBase()
+    {
+        if(currentBaseHexagon != null)
+        {
+            transform.SetParent(currentBaseHexagon.transform);
+            transform.position = currentBaseHexagon.transform.position + offset;
+            currentBaseHexagon.SetOriginal();
+            currentBaseHexagon.isPlaceable = false;
+            if(meshCollider != null)
+            {
+                meshCollider.enabled = false;
+            }
+            else
+            {
+                Debug.Log("Collider is null" + gameObject);
+            }
+
+        }
     }
 }
 [System.Serializable]
