@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Scripting.APIUpdating;
@@ -78,7 +79,8 @@ public class GameManager : MonoBehaviour
         SetNeightborHexagon(hexagon);
 
         // get list stack neightbor have same top type
-        ChipStack priority;
+        ChipStack priority = null;
+
         foreach (var temp in hexagon.neightbors)
         {
             ChipStack check = temp.currentChipStack;
@@ -93,6 +95,24 @@ public class GameManager : MonoBehaviour
                         Debug.Log("Check");
                     }
                 }
+            }
+        }
+
+        if (StackToCheck.Count != 0)
+        {
+            if (priority == null) priority = StackToCheck.First();
+            if (priority != null)
+            {
+                //for(int i = 0; i < StackToCheck.Count; i++)
+                //{
+                //    if (StackToCheck[i] != priority)
+                //    {
+
+                //    }
+                //}
+
+                hexagon.currentChipStack.transform.SetParent(priority.transform);
+                hexagon.currentChipStack.transform.position = priority.transform.position;
             }
         }
 
