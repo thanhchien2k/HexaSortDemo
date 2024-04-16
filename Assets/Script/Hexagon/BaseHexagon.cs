@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,7 +8,11 @@ public class BaseHexagon : MonoBehaviour
     [SerializeField] Material originalMaterial;
     [SerializeField] Material hightlightMaterial;
     [SerializeField] Renderer Renderer;
+    public ChipStack currentChipStack {  get; set; }
     public bool isPlaceable = true;
+    public List<BaseHexagon> neightbors { get; set; } = new List<BaseHexagon>();
+    public Vector2Int Coordinate { get; set; }
+    
     //private void OnTriggerEnter(Collider other)
     //{
     //    ChipStack tileStack = other.GetComponent<ChipStack>();
@@ -38,4 +43,11 @@ public class BaseHexagon : MonoBehaviour
 
             Renderer.material = originalMaterial;
     }
+
+    public void ReMoveChipStack()
+    {
+        currentChipStack = null;
+    }
+
 }
+

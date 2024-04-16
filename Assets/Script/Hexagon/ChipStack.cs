@@ -6,15 +6,16 @@ using UnityEngine;
 public class ChipStack : MonoBehaviour
 {
     [SerializeField] Vector3 offset;
-    [SerializeField] MeshCollider meshCollider;
+    [SerializeField] BoxCollider boxCollider;
     private BaseHexagon currentBaseHexagon = null;
     private Vector3 originalPosition;
-    private Stack<ChipBlock> stackChipBlock;
-    public bool isOnGrid = false;
+    public List<ChipBlock> listChipBlock;
+    public int chipCount;
 
 
     private void Awake()
     {
+        listChipBlock = new List<ChipBlock>();
         originalPosition = transform.position;
     }
 
@@ -86,9 +87,10 @@ public class ChipStack : MonoBehaviour
             transform.position = currentBaseHexagon.transform.position + offset;
             currentBaseHexagon.SetOriginal();
             currentBaseHexagon.isPlaceable = false;
-            if(meshCollider != null)
+            currentBaseHexagon.currentChipStack = this;
+            if(boxCollider != null)
             {
-                meshCollider.enabled = false;
+                boxCollider.enabled = false;
             }
             else
             {
@@ -96,19 +98,25 @@ public class ChipStack : MonoBehaviour
             }
 
         }
+
+        GameManager.Instance.CheckSurroundingHexagon(currentBaseHexagon);
     }
-}
-[System.Serializable]
-public enum ChipType
-{
-    Red,
-    Yellow,
-    Green,
-    Blue
-}
-[System.Serializable]
-public class ChipBlock
-{
-    public ChipType ChipType;
-    public int ChipCount;
+
+    public void SetHeightCollider(float size)
+    {
+        if (boxCollider != null)
+        {
+            boxCollider.size = boxCollider.size + Vector3.up * size;
+        }
+    }
+
+    public ChipType GetTopType()
+    {
+        return listChipBlock[listChipBlock.Count - 1].ChipType;
+    }
+
+    public bool IsOneTypeStack()
+    {
+        return listChipBlock.Count == 1;
+    }
 }
