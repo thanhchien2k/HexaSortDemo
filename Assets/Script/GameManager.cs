@@ -66,7 +66,7 @@ public class GameManager : MonoBehaviour
                 maps[x, y].gameObject.name = "Cell " + x + "-" + y;
                 maps[x, y].Coordinate = new Vector2Int(x, y);            }
         }
-        //mapRoot.position = new Vector3(mapRoot.position.x, mapRoot.position.y, mapRoot.position.z - worldCenterPoint.z);
+        mapRoot.position = new Vector3(mapRoot.position.x - size.x/4 * offset.x, mapRoot.position.y, mapRoot.position.z);
     }
 
     public void CheckSurroundingHexagon(BaseHexagon hexagon)
