@@ -63,7 +63,7 @@ public class ChipStackSpawner : MonoBehaviour
 
         while (count >0) 
         {
-            GameObject newChip = Instantiate(GameManager.Instance.chipsPrefabs[(int)_type], blockPos + Vector3.up * ChipSpacing * currentCount, Quaternion.identity , chipBlock.transform);
+            GameObject newChip = Instantiate(GameManager.Instance.chipsPrefabs[(int)_type], blockPos + Vector3.up * GameManager.Instance.offset.y * currentCount, Quaternion.identity , chipBlock.transform);
             newChip.name = nameof(_type);
             block.ListChip.Add(newChip);
             currentCount++;

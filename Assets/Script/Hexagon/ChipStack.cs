@@ -132,7 +132,7 @@ public class ChipStack : MonoBehaviour
         {
             allChip += listChipBlock[i].ChipCount;
         }
-        return transform.position + (Vector3.up * 0.04f * (allChip - 1));
+        return transform.position + (Vector3.up * GameManager.Instance.offset.y * (allChip - 1));
     }
 
     public void AddChipBlock(ChipBlock chipBlock)

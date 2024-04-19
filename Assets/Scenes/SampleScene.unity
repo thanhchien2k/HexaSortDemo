@@ -172,7 +172,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ChipSpacing: 0.04
   chipStackPrefabs: {fileID: 240183960606097471, guid: 6c0dfed63618ba5448dc799f5059b8bd, type: 3}
-  maxChipOfStack: 7
+  maxChipOfStack: 8
   listPosSpawn:
   - {fileID: 1294157180}
   - {fileID: 1228032502}
@@ -618,7 +618,8 @@ MonoBehaviour:
     - {x: -1, y: 0}
   StackToCheck: []
   size: {x: 4, y: 4}
-  isMoveBlock: 0
+  numToRemoveBlock: 10
+  isMoving: 0
 --- !u!4 &1503184851
 Transform:
   m_ObjectHideFlags: 0

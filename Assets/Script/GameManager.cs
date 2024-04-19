@@ -16,8 +16,8 @@ public class GameManager : MonoBehaviour
     public List<HexagonCoordinate> neightborCoordinates;
     public List<BaseHexagon> StackToCheck = new List<BaseHexagon>();
     [SerializeField] Vector2Int size;
-    public bool isMoveBlock = false;
-    int addCount;
+    public int numToRemoveBlock;
+    public bool isMoving = false;
 
     private void Awake()
     {
@@ -78,8 +78,7 @@ public class GameManager : MonoBehaviour
 
     public void CheckSurroundingHexagon(BaseHexagon hexagon)
     {
-        Debug.Log("Check");
-        Debug.Log(hexagon);
+        isMoving = true;
         StackToCheck.RemoveAll(item => item == hexagon);
         if (neightborCoordinates.Count <= 0)
         {
@@ -88,6 +87,7 @@ public class GameManager : MonoBehaviour
 
         if(hexagon.currentChipStack == null)
         {
+            Debug.Log("stack is null");
             CheckRecallCheckSurround();
             return;
         }
@@ -132,58 +132,61 @@ public class GameManager : MonoBehaviour
             {
                 for (int i = 0; i < listCheck.Count; i++)
                 {
-                    
+                    if (listCheck[i].neightbors.Count == 0) continue;
+                    BaseHexagon checkHexagon = listCheck[i].CheckSecondType();
+
+                    if(checkHexagon != null)
+                    {
+                        priorityPutOn = hexagon;
+                        break;
+                    }
+                    else
+                    {
+                        if(hexagon.CheckSecondType() != null)
+                        {
+                            priorityPutOn = listCheck[i];
+                        }
+                        else
+                        {
+                            priorityPutOn = hexagon;
+                        }
+                        break;
+                    }
+                }
+            }
+
+            if (priorityPutOn == hexagon)
+            {
+                for (int i = 0; i < listCheck.Count; i++)
+                {
+                    Debug.Log("Move to put hexagon");
                     MoveChip(listCheck[i], hexagon);
                     if (!StackToCheck.Contains(listCheck[i])) StackToCheck.Add(listCheck[i]);
                 }
-
-                DOVirtual.DelayedCall(1f, () =>
-                {
-                    hexagon.CheckChipStack();
-                });
             }
             else
             {
-                if(priorityPutOn == hexagon)
+                for (int i = 0; i < listCheck.Count; i++)
                 {
-                    for (int i = 0; i < listCheck.Count; i++)
+                    if (priorityPutOn != listCheck[i])
                     {
                         MoveChip(listCheck[i], hexagon);
                         if (!StackToCheck.Contains(listCheck[i])) StackToCheck.Add(listCheck[i]);
                     }
                 }
-                else
-                {
-                    for (int i = 0; i < listCheck.Count; i++)
-                    {
-                       if(priorityPutOn != listCheck[i])
-                        {
-                            MoveChip(listCheck[i], hexagon);
-                            if (!StackToCheck.Contains(listCheck[i])) StackToCheck.Add(listCheck[i]);
-                        }
-                    }
 
-                    if (!StackToCheck.Contains(hexagon)) StackToCheck.Add(hexagon);
-                    MoveChip(hexagon, priorityPutOn);
-                }
-
-                DOVirtual.DelayedCall(1f, () =>
-                {
-                    priorityPutOn.CheckChipStack();
-                });
+                if (!StackToCheck.Contains(hexagon)) StackToCheck.Add(hexagon);
+                MoveChip(hexagon, priorityPutOn);
             }
+
+            DOVirtual.DelayedCall(0.5f, () =>
+            {
+                priorityPutOn.CheckChipStack();
+            });
 
         }
 
         CheckRecallCheckSurround();
-
-        //if(StackToCheck.Count > 10)
-        //{
-        //    foreach (var item in StackToCheck)
-        //    {
-        //        Debug.Log(item.name);
-        //    }
-        //}
 
         if (spawner.CheckSpawnPosIsEmpty())
         {
@@ -195,28 +198,17 @@ public class GameManager : MonoBehaviour
     {
         if (StackToCheck.Count > 0)
         {
-
-            DOVirtual.DelayedCall(1f, () =>
+            DOVirtual.DelayedCall(0.5f, () =>
             {
-                foreach (var item in StackToCheck) { { Debug.Log(item.name); } }
-                Debug.Log(StackToCheck.First() + " check");
                 CheckSurroundingHexagon(StackToCheck.First());
             });
         }
+        else
+        {
+            isMoving = false;
+        }
     }
-    //public void MoveListChipBlock(List<BaseHexagon> listHexagon, BaseHexagon newHexagon)
-    //{
-    //    isMoveBlock = true;
-    //    int nums = 0;
-    //    MoveChip(listHexagon[0], newHexagon);
-    //    nums++;
-    //    Debug.Log("start");
-    //    DOTween.Sequence().SetDelay(1f).OnComplete(() =>
-    //    {
-    //        Debug.Log("tween");
-    //    });
-    //}
-    // move chip from to currentHexagon to newHexagon
+
     private void MoveChip(BaseHexagon currentHexagon, BaseHexagon newHexagon)
     {
         Vector3 beginPos = newHexagon.currentChipStack.GetTopPosition();
@@ -225,7 +217,7 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i< moveChipBlock.ChipCount; i++)
         {
-            beginPos += new Vector3(0, 0.04f, 0);
+            beginPos += new Vector3(0, offset.y, 0);
             moveChipBlock.ListChip[i].transform.DOMove(beginPos, 0.3f).SetEase(Ease.Linear);
         }
             currentHexagon.currentChipStack.RemoveTopChipBlock();
@@ -264,7 +256,8 @@ public enum ChipType
     Red,
     Yellow,
     Green,
-    Blue
+    Blue,
+    Null
 }
 [System.Serializable]
 public class ChipBlock

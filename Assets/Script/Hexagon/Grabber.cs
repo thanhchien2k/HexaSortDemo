@@ -14,6 +14,7 @@ public class Grabber : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameManager.Instance.isMoving) return;
         if (Input.GetMouseButtonDown(0))
         {
             if (sellectGO == null)
@@ -43,8 +44,8 @@ public class Grabber : MonoBehaviour
         {
              if(sellectGO != null)
             {
-                Vector3 position = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.WorldToScreenPoint(sellectGO.gameObject.transform.position).z);
-                Vector3 worldPos = Camera.main.ScreenToWorldPoint(position);
+                //Vector3 position = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.WorldToScreenPoint(sellectGO.gameObject.transform.position).z);
+                //Vector3 worldPos = Camera.main.ScreenToWorldPoint(position);
                 if(sellectGO.GetCurrentHexagon() != null)
                 {
                     sellectGO.PutOnHexagonBase();

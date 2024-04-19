@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class BaseHexagon : MonoBehaviour
@@ -53,9 +54,9 @@ public class BaseHexagon : MonoBehaviour
 
     public void CheckChipStack()
     {
-        if(currentChipStack.listChipBlock.Last().ChipCount >= 8)
+        if(currentChipStack.listChipBlock.Last().ChipCount >= GameManager.Instance.numToRemoveBlock)
         {
-            ResetHexagon();
+            currentChipStack.RemoveTopChipBlock();
         }
     }
 
