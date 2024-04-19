@@ -1,10 +1,7 @@
-using System;
-using System.Collections;
+using DG.Tweening;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Rendering;
-using UnityEngine.Scripting.APIUpdating;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,10 +12,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Transform mapRoot;
     [SerializeField] ChipStackSpawner spawner;
     public List<ChipType> listType = new List<ChipType>();
-    public List<GameObject> chips = new List<GameObject>();
+    public List<GameObject> chipsPrefabs = new List<GameObject>();
     public List<HexagonCoordinate> neightborCoordinates;
-    public List<ChipStack> StackToCheck = new List<ChipStack>();
+    public List<BaseHexagon> StackToCheck = new List<BaseHexagon>();
     [SerializeField] Vector2Int size;
+    public bool isMoveBlock = false;
+    int addCount;
 
     private void Awake()
     {
@@ -69,17 +68,41 @@ public class GameManager : MonoBehaviour
         mapRoot.position = new Vector3(mapRoot.position.x - size.x/4 * offset.x, mapRoot.position.y, mapRoot.position.z);
     }
 
+    public void CheckList(List<BaseHexagon> hexagons)
+    {
+        for(int i = 0; i < hexagons.Count; i++)
+        {
+            CheckSurroundingHexagon(hexagons[i]);
+        }
+    }
+
     public void CheckSurroundingHexagon(BaseHexagon hexagon)
     {
-        if(neightborCoordinates.Count <= 0)
+        Debug.Log("Check");
+        Debug.Log(hexagon);
+        StackToCheck.RemoveAll(item => item == hexagon);
+        if (neightborCoordinates.Count <= 0)
         {
             Debug.Log("neightbor coordinate is null");
         }
 
+        if(hexagon.currentChipStack == null)
+        {
+            CheckRecallCheckSurround();
+            return;
+        }
+        // Search neightbor for hexagon 
         SetNeightborHexagon(hexagon);
 
+
         // get list stack neightbor have same top type
-        ChipStack priority = null;
+        BaseHexagon priorityPutOn = null;
+        List<BaseHexagon> listCheck = new List<BaseHexagon>();
+
+        if (hexagon.currentChipStack.IsOneTypeStack())
+        {
+            priorityPutOn = hexagon;
+        }
 
         foreach (var temp in hexagon.neightbors)
         {
@@ -88,46 +111,124 @@ public class GameManager : MonoBehaviour
             {
                 if(check.GetTopType() == hexagon.currentChipStack.GetTopType())
                 {
-                    if (!StackToCheck.Contains(check))
+                    if (!listCheck.Contains(temp))
                     {
-                        if (check.IsOneTypeStack()) priority = check;
-                        StackToCheck.Add(check);
-                        Debug.Log("Check");
+                        if (check.IsOneTypeStack() && priorityPutOn == null)
+                        {
+                            priorityPutOn = temp;
+                        }
+                        else
+                        {
+                            listCheck.Add(temp);
+                        }
                     }
                 }
             }
         }
 
-        if (StackToCheck.Count != 0)
+        if (listCheck.Count != 0 || priorityPutOn != null)
         {
-            if (priority == null) priority = StackToCheck.First();
-            if (priority != null)
+            if(priorityPutOn == null)
             {
-                //for(int i = 0; i < StackToCheck.Count; i++)
-                //{
-                //    if (StackToCheck[i] != priority)
-                //    {
+                for (int i = 0; i < listCheck.Count; i++)
+                {
+                    
+                    MoveChip(listCheck[i], hexagon);
+                    if (!StackToCheck.Contains(listCheck[i])) StackToCheck.Add(listCheck[i]);
+                }
 
-                //    }
-                //}
-
-                hexagon.currentChipStack.transform.SetParent(priority.transform);
-                hexagon.currentChipStack.transform.position = priority.transform.position;
+                DOVirtual.DelayedCall(1f, () =>
+                {
+                    hexagon.CheckChipStack();
+                });
             }
+            else
+            {
+                if(priorityPutOn == hexagon)
+                {
+                    for (int i = 0; i < listCheck.Count; i++)
+                    {
+                        MoveChip(listCheck[i], hexagon);
+                        if (!StackToCheck.Contains(listCheck[i])) StackToCheck.Add(listCheck[i]);
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < listCheck.Count; i++)
+                    {
+                       if(priorityPutOn != listCheck[i])
+                        {
+                            MoveChip(listCheck[i], hexagon);
+                            if (!StackToCheck.Contains(listCheck[i])) StackToCheck.Add(listCheck[i]);
+                        }
+                    }
+
+                    if (!StackToCheck.Contains(hexagon)) StackToCheck.Add(hexagon);
+                    MoveChip(hexagon, priorityPutOn);
+                }
+
+                DOVirtual.DelayedCall(1f, () =>
+                {
+                    priorityPutOn.CheckChipStack();
+                });
+            }
+
         }
 
+        CheckRecallCheckSurround();
 
-        // check spawn chip stack
+        //if(StackToCheck.Count > 10)
+        //{
+        //    foreach (var item in StackToCheck)
+        //    {
+        //        Debug.Log(item.name);
+        //    }
+        //}
+
         if (spawner.CheckSpawnPosIsEmpty())
         {
             spawner.SpawnChipStackInPos();
         }
 
     }
-
-    private void MoveChip()
+    private void CheckRecallCheckSurround()
     {
+        if (StackToCheck.Count > 0)
+        {
 
+            DOVirtual.DelayedCall(1f, () =>
+            {
+                foreach (var item in StackToCheck) { { Debug.Log(item.name); } }
+                Debug.Log(StackToCheck.First() + " check");
+                CheckSurroundingHexagon(StackToCheck.First());
+            });
+        }
+    }
+    //public void MoveListChipBlock(List<BaseHexagon> listHexagon, BaseHexagon newHexagon)
+    //{
+    //    isMoveBlock = true;
+    //    int nums = 0;
+    //    MoveChip(listHexagon[0], newHexagon);
+    //    nums++;
+    //    Debug.Log("start");
+    //    DOTween.Sequence().SetDelay(1f).OnComplete(() =>
+    //    {
+    //        Debug.Log("tween");
+    //    });
+    //}
+    // move chip from to currentHexagon to newHexagon
+    private void MoveChip(BaseHexagon currentHexagon, BaseHexagon newHexagon)
+    {
+        Vector3 beginPos = newHexagon.currentChipStack.GetTopPosition();
+        ChipBlock moveChipBlock = currentHexagon.currentChipStack.listChipBlock.Last();
+        newHexagon.currentChipStack.AddChipBlock(moveChipBlock);
+
+        for (int i = 0; i< moveChipBlock.ChipCount; i++)
+        {
+            beginPos += new Vector3(0, 0.04f, 0);
+            moveChipBlock.ListChip[i].transform.DOMove(beginPos, 0.3f).SetEase(Ease.Linear);
+        }
+            currentHexagon.currentChipStack.RemoveTopChipBlock();
     }
 
     private void SetNeightborHexagon(BaseHexagon hexagon)
@@ -149,6 +250,12 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+
+    public void RemoveFromStack(BaseHexagon baseHexagon)
+    {
+        StackToCheck.RemoveAll(x => x == baseHexagon);
+    }
+
 }
 
 [System.Serializable]
@@ -162,21 +269,23 @@ public enum ChipType
 [System.Serializable]
 public class ChipBlock
 {
+    public Transform Block;
     public ChipType ChipType;
     public int ChipCount;
-    public List<GameObject> listChip;
+    public List<GameObject> ListChip;
 
-    public ChipBlock(ChipType chipType, int chipCount, List<GameObject> listChip = null)
+    public ChipBlock(Transform block, ChipType chipType, int chipCount, List<GameObject> listChip = null)
     {
-        ChipType = chipType;
-        ChipCount = chipCount;
+        this.Block = block;
+        this.ChipType = chipType;
+        this.ChipCount = chipCount;
         if(listChip == null)
         {
-            this.listChip = new();
+            this.ListChip = new();
         }
         else
         {
-            this.listChip = listChip;
+            this.ListChip = listChip;
         }
     }
 }

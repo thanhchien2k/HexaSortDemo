@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BaseHexagon : MonoBehaviour
@@ -46,8 +48,38 @@ public class BaseHexagon : MonoBehaviour
 
     public void ReMoveChipStack()
     {
-        currentChipStack = null;
+        ResetHexagon();
     }
 
+    public void CheckChipStack()
+    {
+        if(currentChipStack.listChipBlock.Last().ChipCount >= 8)
+        {
+            ResetHexagon();
+        }
+    }
+
+    private void ResetHexagon()
+    {
+        Destroy(currentChipStack.gameObject);
+        currentChipStack = null;
+        isPlaceable = true;
+    }
+
+    public BaseHexagon CheckSecondType()
+    {
+        for (int i = 0; i < neightbors.Count; i++)
+        {
+            ChipStack check = neightbors[i].currentChipStack;
+            if(check != null)
+            {
+                if (currentChipStack.GetSecondChipType() == check.GetTopType())
+                {
+                    return neightbors[i];
+                }
+            }
+        }
+        return null;
+    }
 }
 

@@ -212,7 +212,7 @@ Light:
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -596,7 +596,7 @@ MonoBehaviour:
   mapRoot: {fileID: 1503184851}
   spawner: {fileID: 606379295}
   listType: 00000000010000000200000003000000
-  chips:
+  chipsPrefabs:
   - {fileID: 1425036969383031844, guid: 0dd4f172ae836544b9599178f9eac676, type: 3}
   - {fileID: 1425036969383031844, guid: 846771485c628ca40bac32e4fc56243f, type: 3}
   - {fileID: 1425036969383031844, guid: 16182a041775426479a91de5b9d0cfc2, type: 3}
@@ -618,6 +618,7 @@ MonoBehaviour:
     - {x: -1, y: 0}
   StackToCheck: []
   size: {x: 4, y: 4}
+  isMoveBlock: 0
 --- !u!4 &1503184851
 Transform:
   m_ObjectHideFlags: 0

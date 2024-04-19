@@ -52,21 +52,20 @@ public class ChipStackSpawner : MonoBehaviour
     {
         int maxChipOfBlock = maxChipOfStack - currentCount;
         if (maxChipOfBlock <= 0) return;
-
-        int count = Random.Range(2, maxChipOfBlock);
-        ChipBlock block = new ChipBlock(_type, count);
-
+        int count = Random.Range(2, maxChipOfBlock + 1);
+        //Debug.Log(count);
         GameObject chipBlock = new GameObject(nameof(_type)+" Block");
         chipBlock.transform.parent = stack.transform;
         chipBlock.transform.position = stack.transform.position;
-
         Vector3 blockPos = chipBlock.transform.position;
+
+        ChipBlock block = new ChipBlock(chipBlock.transform, _type, count);
 
         while (count >0) 
         {
-            GameObject newChip = Instantiate(GameManager.Instance.chips[(int)_type], blockPos + Vector3.up * ChipSpacing * currentCount, Quaternion.identity , chipBlock.transform);
+            GameObject newChip = Instantiate(GameManager.Instance.chipsPrefabs[(int)_type], blockPos + Vector3.up * ChipSpacing * currentCount, Quaternion.identity , chipBlock.transform);
             newChip.name = nameof(_type);
-            block.listChip.Add(newChip);
+            block.ListChip.Add(newChip);
             currentCount++;
             count--;
         }

@@ -1,6 +1,7 @@
 
 using DG.Tweening;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ChipStack : MonoBehaviour
@@ -10,7 +11,6 @@ public class ChipStack : MonoBehaviour
     private BaseHexagon currentBaseHexagon = null;
     private Vector3 originalPosition;
     public List<ChipBlock> listChipBlock;
-    public int chipCount;
 
 
     private void Awake()
@@ -112,11 +112,47 @@ public class ChipStack : MonoBehaviour
 
     public ChipType GetTopType()
     {
-        return listChipBlock[listChipBlock.Count - 1].ChipType;
+        return listChipBlock.Last().ChipType;
     }
 
     public bool IsOneTypeStack()
     {
         return listChipBlock.Count == 1;
     }
+
+    public ChipType GetSecondChipType()
+    {
+        return listChipBlock[listChipBlock.Count - 2].ChipType;
+    }
+
+    public Vector3 GetTopPosition()
+    {
+        int allChip = 0;
+        for (int i = 0; i < listChipBlock.Count; i++)
+        {
+            allChip += listChipBlock[i].ChipCount;
+        }
+        return transform.position + (Vector3.up * 0.04f * (allChip - 1));
+    }
+
+    public void AddChipBlock(ChipBlock chipBlock)
+    {
+        if (chipBlock.ListChip.Count == 0) Debug.Log("0 chip move");
+        ChipBlock topBlock = listChipBlock.Last();
+
+        topBlock.ListChip.AddRange(chipBlock.ListChip);
+        topBlock.ChipCount += chipBlock.ChipCount;
+        chipBlock.ListChip.ForEach(x => x.transform.parent = topBlock.Block);
+    }
+
+    public void RemoveTopChipBlock()
+    {
+        if(listChipBlock.Count <= 1) currentBaseHexagon.ReMoveChipStack();
+        else
+        {
+            Destroy(listChipBlock.Last().Block.gameObject);
+            listChipBlock.RemoveAt(listChipBlock.Count - 1);
+        }
+    }
+
 }

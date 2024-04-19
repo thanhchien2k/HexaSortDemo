@@ -35,7 +35,7 @@ public class Grabber : MonoBehaviour
         {
             Vector3 position = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.WorldToScreenPoint(sellectGO.gameObject.transform.position).z);
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(position);
-            sellectGO.transform.position = new Vector3(worldPos.x, 0.1f, worldPos.z);
+            sellectGO.transform.position = new Vector3(worldPos.x, 0.2f, worldPos.z);
             sellectGO.GetBaseHexagon();
         }
 
