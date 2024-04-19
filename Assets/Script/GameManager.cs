@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        maps = new BaseHexagon[4, 4];
+        maps = new BaseHexagon[size.x, size.y];
         CreateMap();
     }
 

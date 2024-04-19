@@ -152,6 +152,7 @@ public class ChipStack : MonoBehaviour
         {
             Destroy(listChipBlock.Last().Block.gameObject);
             listChipBlock.RemoveAt(listChipBlock.Count - 1);
+            GameManager.Instance.StackToCheck.Add(currentBaseHexagon);
         }
     }
 
