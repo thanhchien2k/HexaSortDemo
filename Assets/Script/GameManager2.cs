@@ -1,16 +1,15 @@
 using DG.Tweening;
-using JetBrains.Annotations;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManager2 : MonoBehaviour
 {
-    public static GameManager Instance;
+    public static GameManager2 Instance;
     private BaseHexagon[,] maps;
     [SerializeField] BaseHexagon hexagonPrefabs;
-    public Vector3 offset {  get; private set; }
+    public Vector3 offset { get; private set; }
     [SerializeField] private Transform mapRoot;
     [SerializeField] ChipStackSpawner spawner;
     public List<ChipType> listType = new List<ChipType>();
@@ -48,14 +47,14 @@ public class GameManager : MonoBehaviour
     {
         if (hexagonPrefabs == null || mapRoot == null) return;
         Vector3 worldPosition;
-        if(size.x == 0 || size.y == 0)
+        if (size.x == 0 || size.y == 0)
         {
             Debug.Log("size is wrong!");
             return;
         }
         for (int x = 0; x < size.x; x++)
         {
-            for (int y = 0; y< size.y; y++)
+            for (int y = 0; y < size.y; y++)
             {
                 float zPos = y * offset.z;
                 if (x % 2 == 1)
@@ -65,14 +64,15 @@ public class GameManager : MonoBehaviour
                 worldPosition = new Vector3(x * offset.x * 3 / 4, 0, zPos);
                 maps[x, y] = Instantiate(hexagonPrefabs, worldPosition, Quaternion.identity, mapRoot);
                 maps[x, y].gameObject.name = "Cell " + x + "-" + y;
-                maps[x, y].Coordinate = new Vector2Int(x, y);            }
+                maps[x, y].Coordinate = new Vector2Int(x, y);
+            }
         }
-        mapRoot.position = new Vector3(mapRoot.position.x - size.x/4 * offset.x, mapRoot.position.y, mapRoot.position.z);
+        mapRoot.position = new Vector3(mapRoot.position.x - size.x / 4 * offset.x, mapRoot.position.y, mapRoot.position.z);
     }
 
     public void CheckList(List<BaseHexagon> hexagons)
     {
-        for(int i = 0; i < hexagons.Count; i++)
+        for (int i = 0; i < hexagons.Count; i++)
         {
             CheckSurroundingHexagon(hexagons[i]);
         }
@@ -87,7 +87,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("neightbor coordinate is null");
         }
 
-        if(hexagon.currentChipStack == null)
+        if (hexagon.currentChipStack == null)
         {
             CheckRecallCheckSurround();
             return;
@@ -108,9 +108,9 @@ public class GameManager : MonoBehaviour
         foreach (var temp in hexagon.neightbors)
         {
             ChipStack check = temp.currentChipStack;
-            if ( check != null)
+            if (check != null)
             {
-                if(check.GetTopType() == hexagon.currentChipStack.GetTopType())
+                if (check.GetTopType() == hexagon.currentChipStack.GetTopType())
                 {
                     if (!listCheck.Contains(temp))
                     {
@@ -129,23 +129,25 @@ public class GameManager : MonoBehaviour
 
         if (listCheck.Count != 0 || (priorityPutOn != null && priorityPutOn != hexagon))
         {
-            if(priorityPutOn == null)
+            if (priorityPutOn == null)
             {
                 for (int i = 0; i < listCheck.Count; i++)
                 {
                     if (listCheck[i].neightbors.Count == 0) continue;
                     BaseHexagon checkHexagon = listCheck[i].CheckSecondType();
-
-                    if(checkHexagon != null)
+                    Debug.Log(checkHexagon);
+                    if (checkHexagon != null)
                     {
+                        // check sau co loi khi mau thu 2 trung voi no la hexagon
                         priorityPutOn = hexagon;
                         break;
                     }
                     else
                     {
-                        if(hexagon.CheckSecondType() != null)
+                        if (hexagon.CheckSecondType() != null)
                         {
                             priorityPutOn = listCheck[i];
+                            listCheck.RemoveAt(i);
                         }
                         else
                         {
@@ -159,41 +161,28 @@ public class GameManager : MonoBehaviour
 
             if (priorityPutOn == hexagon)
             {
-                //for (int i = 0; i < listCheck.Count; i++)
-                //{
-                //    Debug.Log("Move to put hexagon");
-                //    MoveChipBlock(listCheck[i], hexagon);
-                //    if (!StackToCheck.Contains(listCheck[i])) StackToCheck.Add(listCheck[i]);
-                //}
                 MoveListBlock(listCheck, hexagon, 0);
-                Debug.Log("hexagon is priproty");
             }
             else
             {
-
-                for (int i = 0; i < listCheck.Count; i++)
+                if(listCheck.Count == 0)
                 {
-                    if (priorityPutOn != listCheck[i])
-                    {
-                        MoveChipBlock(listCheck[i], hexagon);
-                        if (!StackToCheck.Contains(listCheck[i])) StackToCheck.Add(listCheck[i]);
-                    }
-                }
+                    listCheck.Add(hexagon);
+                    MoveListBlock(listCheck, priorityPutOn, 0);
 
-                if (!StackToCheck.Contains(hexagon)) StackToCheck.Add(hexagon);
-                MoveChipBlock(hexagon, priorityPutOn);
+                }
+                else
+                {
+                    // dang loi o day
+                    MoveListBlock(listCheck, priorityPutOn, 0, hexagon);
+                }
             }
 
-            //DOVirtual.DelayedCall(0.5f, () =>
-            //{
-            //    priorityPutOn.CheckChipStack();
-            //});
-
-            //Debug.Log("end move");
-
         }
-
-        CheckRecallCheckSurround();
+        else
+        {
+            CheckRecallCheckSurround();
+        }
 
         if (spawner.CheckSpawnPosIsEmpty())
         {
@@ -203,7 +192,6 @@ public class GameManager : MonoBehaviour
     }
     private void CheckRecallCheckSurround()
     {
-        //Debug.Log("Checkaround");
         if (StackToCheck.Count > 0)
         {
             DOVirtual.DelayedCall(0.5f, () =>
@@ -217,59 +205,52 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void MoveListBlock(List<BaseHexagon> listHexagon, BaseHexagon putOnHexagon, int index,BaseHexagon medialHexagon = null)
+    private void MoveListBlock(List<BaseHexagon> listHexagon, BaseHexagon putOnHexagon, int index, BaseHexagon medialHexagon = null)
     {
-        if(index > listHexagon.Count - 1)
+        if (index > listHexagon.Count - 1)
         {
-            if(medialHexagon != null)
+            if (medialHexagon != null)
             {
-                MoveChipBlock(medialHexagon, putOnHexagon, true);
+                Debug.Log("move from hexagon to priproty");
+                MoveChip(medialHexagon.currentChipStack.listChipBlock.Last().ListChip, medialHexagon ,putOnHexagon, medialHexagon.currentChipStack.GetTopPosition(), 0, () =>
+                {
+                    putOnHexagon.CheckChipStack();
+                    CheckRecallCheckSurround();
+                });
                 if (!StackToCheck.Contains(medialHexagon)) StackToCheck.Add(medialHexagon);
-
+                medialHexagon.currentChipStack.RemoveTopChipBlock();
             }
             else
             {
+                CheckRecallCheckSurround();
                 putOnHexagon.CheckChipStack();
             }
+
             return;
         }
         BaseHexagon newHexagon;
-
-        if (medialHexagon != null)
-        {
-            newHexagon = medialHexagon;
-        }
-        else
-        {
-            newHexagon = putOnHexagon;
-        }
-
-        if (!StackToCheck.Contains(listHexagon[index])) StackToCheck.Add(listHexagon[index]);
-
         BaseHexagon currentHexagon = listHexagon[index];
+
+        newHexagon = medialHexagon != null ? medialHexagon : putOnHexagon;
+        if (!StackToCheck.Contains(listHexagon[index])) StackToCheck.Add(listHexagon[index]);
         Vector3 beginPos = newHexagon.currentChipStack.GetTopPosition();
         ChipBlock moveChipBlock = currentHexagon.currentChipStack.listChipBlock.Last();
         newHexagon.currentChipStack.AddChipBlock(moveChipBlock);
-        MoveChip(moveChipBlock.ListChip, currentHexagon, newHexagon, beginPos, 0);
+
+        MoveChip(moveChipBlock.ListChip, currentHexagon, newHexagon, beginPos, 0, () =>
+        {
+            MoveListBlock(listHexagon, putOnHexagon, index + 1, medialHexagon);
+        });
+        
         currentHexagon.currentChipStack.RemoveTopChipBlock();
-    }
-    private void MoveChipBlock(BaseHexagon currentHexagon, BaseHexagon newHexagon, bool isCheck = false)
-    {
-        Vector3 beginPos = newHexagon.currentChipStack.GetTopPosition();
-        ChipBlock moveChipBlock = currentHexagon.currentChipStack.listChipBlock.Last();
-        newHexagon.currentChipStack.AddChipBlock(moveChipBlock);
-        MoveChip(moveChipBlock.ListChip, currentHexagon, newHexagon, beginPos, 0);
-        currentHexagon.currentChipStack.RemoveTopChipBlock();
+        Debug.Log("Remove");
     }
 
-    private void MoveChip(List<GameObject> chips,BaseHexagon currentHexagon ,BaseHexagon putOnHexagon, Vector3 position,int index, bool isCheck = false)
+    private void MoveChip(List<GameObject> chips, BaseHexagon currentHexagon, BaseHexagon putOnHexagon, Vector3 position, int index, Action onComplete = null)
     {
         if (index > chips.Count - 1)
         {
-            if(isCheck)
-            {
-                putOnHexagon.CheckChipStack();
-            }
+            onComplete?.Invoke();
             return;
         }
 
@@ -277,9 +258,17 @@ public class GameManager : MonoBehaviour
         chips[index].transform.DOMove(position, 0.3f).SetEase(Ease.Linear);
         chips[index].transform.DORotate(chips[index].transform.localEulerAngles + new Vector3(0f, 0f, -180f), 0.3f, RotateMode.FastBeyond360).OnComplete(() =>
         {
-            MoveChip(chips, currentHexagon, putOnHexagon,position, index + 1);
+            MoveChip(chips, currentHexagon, putOnHexagon, position, index + 1, onComplete);
         });
     }
+    //private void MoveChipBlock(BaseHexagon currentHexagon, BaseHexagon newHexagon, bool isCheck = false)
+    //{
+    //    Vector3 beginPos = newHexagon.currentChipStack.GetTopPosition();
+    //    ChipBlock moveChipBlock = currentHexagon.currentChipStack.listChipBlock.Last();
+    //    newHexagon.currentChipStack.AddChipBlock(moveChipBlock);
+    //    MoveChip(moveChipBlock.ListChip, currentHexagon, newHexagon, beginPos, 0);
+    //    currentHexagon.currentChipStack.RemoveTopChipBlock();
+    //}
 
     private void SetNeightborHexagon(BaseHexagon hexagon)
     {
@@ -289,7 +278,6 @@ public class GameManager : MonoBehaviour
             for (int i = 0; i < check.Length; i++)
             {
                 Vector2Int checkCoordinate = check[i] + hexagon.Coordinate;
-                //Debug.Log(checkCoordinate);
                 if ((checkCoordinate.x >= 0 && checkCoordinate.x < size.x) && (checkCoordinate.y >= 0 && checkCoordinate.y < size.y))
                 {
                     if (maps[checkCoordinate.x, checkCoordinate.y] != null)
@@ -306,43 +294,4 @@ public class GameManager : MonoBehaviour
         StackToCheck.RemoveAll(x => x == baseHexagon);
     }
 
-}
-
-[System.Serializable]
-public enum ChipType
-{
-    Red,
-    Yellow,
-    Green,
-    Blue,
-    Null
-}
-[System.Serializable]
-public class ChipBlock
-{
-    public Transform Block;
-    public ChipType ChipType;
-    public int ChipCount;
-    public List<GameObject> ListChip;
-
-    public ChipBlock(Transform block, ChipType chipType, int chipCount, List<GameObject> listChip = null)
-    {
-        this.Block = block;
-        this.ChipType = chipType;
-        this.ChipCount = chipCount;
-        if(listChip == null)
-        {
-            this.ListChip = new();
-        }
-        else
-        {
-            this.ListChip = listChip;
-        }
-    }
-}
-[System.Serializable]
-
-public class HexagonCoordinate
-{
-    public Vector2Int[] coordinate;
 }

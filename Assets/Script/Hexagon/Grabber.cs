@@ -14,7 +14,7 @@ public class Grabber : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameManager.Instance.isMoving) return;
+        if (GameManager2.Instance.isMoving) return;
         if (Input.GetMouseButtonDown(0))
         {
             if (sellectGO == null)

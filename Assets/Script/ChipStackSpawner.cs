@@ -36,7 +36,7 @@ public class ChipStackSpawner : MonoBehaviour
     {
         currentCount = 0;
         ChipStack chip = Instantiate(chipStackPrefabs, parent);
-        List<ChipType> chipTypes = new List<ChipType>(GameManager.Instance.listType);
+        List<ChipType> chipTypes = new List<ChipType>(GameManager2.Instance.listType);
         Shuffle(chipTypes);
         int types = Random.Range(1, chipTypes.Count);
         for (int i = 0; i < types; i++)
@@ -63,8 +63,8 @@ public class ChipStackSpawner : MonoBehaviour
 
         while (count >0) 
         {
-            GameObject newChip = Instantiate(GameManager.Instance.chipsPrefabs[(int)_type], blockPos + Vector3.up * GameManager.Instance.offset.y * currentCount, Quaternion.identity , chipBlock.transform);
-            newChip.name = nameof(_type);
+            GameObject newChip = Instantiate(GameManager2.Instance.chipsPrefabs[(int)_type], blockPos + Vector3.up * GameManager2.Instance.offset.y * currentCount, Quaternion.identity , chipBlock.transform);
+            newChip.name = nameof(_type) + count;
             block.ListChip.Add(newChip);
             currentCount++;
             count--;

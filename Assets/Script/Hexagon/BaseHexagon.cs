@@ -54,7 +54,7 @@ public class BaseHexagon : MonoBehaviour
 
     public void CheckChipStack()
     {
-        if(currentChipStack.listChipBlock.Last().ChipCount >= GameManager.Instance.numToRemoveBlock)
+        if(currentChipStack.listChipBlock.Last().ChipCount >= GameManager2.Instance.numToRemoveBlock)
         {
             currentChipStack.RemoveTopChipBlock();
         }

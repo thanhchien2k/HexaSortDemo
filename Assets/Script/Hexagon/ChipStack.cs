@@ -59,8 +59,6 @@ public class ChipStack : MonoBehaviour
                 }
             }
         }
-
-
     }
 
     public BaseHexagon GetCurrentHexagon()
@@ -99,7 +97,7 @@ public class ChipStack : MonoBehaviour
 
         }
 
-        GameManager.Instance.CheckSurroundingHexagon(currentBaseHexagon);
+        GameManager2.Instance.CheckSurroundingHexagon(currentBaseHexagon);
     }
 
     public void SetHeightCollider(float size)
@@ -132,14 +130,14 @@ public class ChipStack : MonoBehaviour
         {
             allChip += listChipBlock[i].ChipCount;
         }
-        return transform.position + (Vector3.up * GameManager.Instance.offset.y * (allChip - 1));
+        return transform.position + (Vector3.up * GameManager2.Instance.offset.y * (allChip - 1));
     }
 
     public void AddChipBlock(ChipBlock chipBlock)
     {
         if (chipBlock.ListChip.Count == 0) Debug.Log("0 chip move");
         ChipBlock topBlock = listChipBlock.Last();
-
+        chipBlock.ListChip.Reverse();
         topBlock.ListChip.AddRange(chipBlock.ListChip);
         topBlock.ChipCount += chipBlock.ChipCount;
         chipBlock.ListChip.ForEach(x => x.transform.parent = topBlock.Block);
@@ -152,7 +150,7 @@ public class ChipStack : MonoBehaviour
         {
             Destroy(listChipBlock.Last().Block.gameObject);
             listChipBlock.RemoveAt(listChipBlock.Count - 1);
-            GameManager.Instance.StackToCheck.Add(currentBaseHexagon);
+            GameManager2.Instance.StackToCheck.Add(currentBaseHexagon);
         }
     }
 
