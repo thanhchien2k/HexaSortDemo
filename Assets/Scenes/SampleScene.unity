@@ -172,7 +172,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ChipSpacing: 0.04
   chipStackPrefabs: {fileID: 240183960606097471, guid: 6c0dfed63618ba5448dc799f5059b8bd, type: 3}
-  maxChipOfStack: 8
+  maxChipOfStack: 7
   listPosSpawn:
   - {fileID: 1294157180}
   - {fileID: 1228032502}
@@ -596,12 +596,7 @@ MonoBehaviour:
   hexagonPrefabs: {fileID: 2738823369374341866, guid: 5239b63e2e710ef4bbd0ba3932ae6923, type: 3}
   mapRoot: {fileID: 1503184851}
   spawner: {fileID: 606379295}
-  listType: 00000000010000000200000003000000
-  chipsPrefabs:
-  - {fileID: 1425036969383031844, guid: 0dd4f172ae836544b9599178f9eac676, type: 3}
-  - {fileID: 1425036969383031844, guid: 846771485c628ca40bac32e4fc56243f, type: 3}
-  - {fileID: 1425036969383031844, guid: 16182a041775426479a91de5b9d0cfc2, type: 3}
-  - {fileID: 1425036969383031844, guid: 187a095a082859a4f93c7fd879656713, type: 3}
+  size: {x: 4, y: 4}
   neightborCoordinates:
   - coordinate:
     - {x: 0, y: -1}
@@ -617,10 +612,13 @@ MonoBehaviour:
     - {x: 0, y: 1}
     - {x: -1, y: 1}
     - {x: -1, y: 0}
-  StackToCheck: []
-  size: {x: 4, y: 4}
+  listType: 00000000010000000200000003000000
+  chipsPrefabs:
+  - {fileID: 1425036969383031844, guid: 0dd4f172ae836544b9599178f9eac676, type: 3}
+  - {fileID: 1425036969383031844, guid: 846771485c628ca40bac32e4fc56243f, type: 3}
+  - {fileID: 1425036969383031844, guid: 16182a041775426479a91de5b9d0cfc2, type: 3}
+  - {fileID: 1425036969383031844, guid: 187a095a082859a4f93c7fd879656713, type: 3}
   numToRemoveBlock: 10
-  isMoving: 0
 --- !u!4 &1503184851
 Transform:
   m_ObjectHideFlags: 0
@@ -662,13 +660,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hexagonPrefabs: {fileID: 2738823369374341866, guid: 5239b63e2e710ef4bbd0ba3932ae6923, type: 3}
   mapRoot: {fileID: 1503184851}
+  size: {x: 4, y: 4}
   spawner: {fileID: 606379295}
-  listType: 00000000010000000200000003000000
-  chipsPrefabs:
-  - {fileID: 1425036969383031844, guid: 0dd4f172ae836544b9599178f9eac676, type: 3}
-  - {fileID: 1425036969383031844, guid: 846771485c628ca40bac32e4fc56243f, type: 3}
-  - {fileID: 1425036969383031844, guid: 16182a041775426479a91de5b9d0cfc2, type: 3}
-  - {fileID: 1425036969383031844, guid: 187a095a082859a4f93c7fd879656713, type: 3}
   neightborCoordinates:
   - coordinate:
     - {x: 0, y: -1}
@@ -684,10 +677,13 @@ MonoBehaviour:
     - {x: 0, y: 1}
     - {x: -1, y: 1}
     - {x: -1, y: 0}
-  StackToCheck: []
-  size: {x: 4, y: 4}
   numToRemoveBlock: 10
-  isMoving: 0
+  listType: 00000000010000000200000003000000
+  chipsPrefabs:
+  - {fileID: 1425036969383031844, guid: 0dd4f172ae836544b9599178f9eac676, type: 3}
+  - {fileID: 1425036969383031844, guid: 846771485c628ca40bac32e4fc56243f, type: 3}
+  - {fileID: 1425036969383031844, guid: 16182a041775426479a91de5b9d0cfc2, type: 3}
+  - {fileID: 1425036969383031844, guid: 187a095a082859a4f93c7fd879656713, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

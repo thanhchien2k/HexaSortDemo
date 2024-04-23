@@ -1,26 +1,24 @@
 using DG.Tweening;
-using JetBrains.Annotations;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     private BaseHexagon[,] maps;
-    [SerializeField] BaseHexagon hexagonPrefabs;
-    public Vector3 offset {  get; private set; }
+    [SerializeField] private BaseHexagon hexagonPrefabs;
     [SerializeField] private Transform mapRoot;
-    [SerializeField] ChipStackSpawner spawner;
+    [SerializeField] private ChipStackSpawner spawner;
+    [SerializeField] private Vector2Int size;
+    public List<HexagonCoordinate> neightborCoordinates;
     public List<ChipType> listType = new List<ChipType>();
     public List<GameObject> chipsPrefabs = new List<GameObject>();
-    public List<HexagonCoordinate> neightborCoordinates;
-    public List<BaseHexagon> StackToCheck = new List<BaseHexagon>();
-    [SerializeField] Vector2Int size;
-    public int numToRemoveBlock;
-    public bool isMoving = false;
+    public List<BaseHexagon> StackToCheck { get; set; } = new List<BaseHexagon>();
+    public Vector3 offset {  get; private set; }
+    public bool isMoving { get; set; } = false;
 
+    public int numToRemoveBlock;
     private void Awake()
     {
         if (Instance == null)
@@ -134,7 +132,7 @@ public class GameManager : MonoBehaviour
                 for (int i = 0; i < listCheck.Count; i++)
                 {
                     if (listCheck[i].neightbors.Count == 0) continue;
-                    BaseHexagon checkHexagon = listCheck[i].CheckSecondType();
+                    List<BaseHexagon> checkHexagon = listCheck[i].CheckSecondType();
 
                     if(checkHexagon != null)
                     {

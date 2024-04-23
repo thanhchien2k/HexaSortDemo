@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Concurrent;
+using DG.Tweening;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class BaseHexagon : MonoBehaviour
@@ -15,19 +12,6 @@ public class BaseHexagon : MonoBehaviour
     public bool isPlaceable = true;
     public List<BaseHexagon> neightbors { get; set; } = new List<BaseHexagon>();
     public Vector2Int Coordinate { get; set; }
-    
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    ChipStack tileStack = other.GetComponent<ChipStack>();
-    //    if(tileStack != null)
-    //    {
-    //        BaseHexagon currentHexagon = tileStack.GetCurrentHexagon();
-    //        if (currentHexagon != null)
-    //        {
-    //            tileStack.SetCurrentHexagon(this);
-    //        }
-    //    }
-    //}
 
     public Vector3 GetWorldPosition() 
     { 
@@ -54,10 +38,14 @@ public class BaseHexagon : MonoBehaviour
 
     public void CheckChipStack()
     {
-        if(currentChipStack.listChipBlock.Last().ChipCount >= GameManager2.Instance.numToRemoveBlock)
+        DOVirtual.DelayedCall(0.1f, () => 
         {
-            currentChipStack.RemoveTopChipBlock();
-        }
+            if (currentChipStack.listChipBlock.Last().ChipCount >= GameManager2.Instance.numToRemoveBlock)
+            {
+                currentChipStack.RemoveTopChipBlock();
+            }
+        });
+
     }
 
     private void ResetHexagon()
@@ -67,8 +55,9 @@ public class BaseHexagon : MonoBehaviour
         isPlaceable = true;
     }
 
-    public BaseHexagon CheckSecondType()
+    public List<BaseHexagon> CheckSecondType()
     {
+        List<BaseHexagon> listSecondType = new List<BaseHexagon>();
         for (int i = 0; i < neightbors.Count; i++)
         {
             ChipStack check = neightbors[i].currentChipStack;
@@ -76,11 +65,12 @@ public class BaseHexagon : MonoBehaviour
             {
                 if (currentChipStack.GetSecondChipType() == check.GetTopType())
                 {
-                    return neightbors[i];
+                    listSecondType.Add(neightbors[i]);
                 }
             }
         }
-        return null;
+        if(listSecondType.Count >0) return listSecondType;
+        else return null;
     }
 }
 

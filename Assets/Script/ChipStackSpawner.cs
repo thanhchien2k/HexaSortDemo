@@ -1,6 +1,5 @@
-using System.Collections;
+
 using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -64,7 +63,7 @@ public class ChipStackSpawner : MonoBehaviour
         while (count >0) 
         {
             GameObject newChip = Instantiate(GameManager2.Instance.chipsPrefabs[(int)_type], blockPos + Vector3.up * GameManager2.Instance.offset.y * currentCount, Quaternion.identity , chipBlock.transform);
-            newChip.name = nameof(_type) + count;
+            newChip.name = nameof(_type);
             block.ListChip.Add(newChip);
             currentCount++;
             count--;
