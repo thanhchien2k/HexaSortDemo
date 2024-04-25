@@ -1,4 +1,3 @@
-
 using DG.Tweening;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +5,6 @@ using UnityEngine;
 
 public class ChipStack : MonoBehaviour
 {
-    [SerializeField] Vector3 offset;
     [SerializeField] BoxCollider boxCollider;
     private BaseHexagon currentBaseHexagon = null;
     private Vector3 originalPosition;
@@ -27,6 +25,7 @@ public class ChipStack : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
             BaseHexagon hexagon = hit.collider.GetComponent<BaseHexagon>();
+
             if (hexagon != null)
             {
                 if (!hexagon.isPlaceable) {
@@ -71,33 +70,36 @@ public class ChipStack : MonoBehaviour
         transform.DOMove(originalPosition, 1f).SetEase(Ease.OutExpo);
     }
 
-    public void DrawRay()
-    {
-        Ray ray = new Ray(transform.position, -Vector3.up);
-        Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red);
-    }
-
     public void PutOnHexagonBase()
     {
         if(currentBaseHexagon != null)
         {
             transform.SetParent(currentBaseHexagon.transform);
-            transform.position = currentBaseHexagon.transform.position + offset;
+            transform.position = currentBaseHexagon.transform.position + (GameManager2.Instance.offset.y * Vector3.up);
             currentBaseHexagon.SetOriginal();
             currentBaseHexagon.isPlaceable = false;
             currentBaseHexagon.currentChipStack = this;
+
             if(boxCollider != null)
             {
                 boxCollider.enabled = false;
             }
-            else
-            {
-                Debug.Log("Collider is null" + gameObject);
-            }
-
         }
 
-        GameManager2.Instance.CheckSurroundingHexagon(currentBaseHexagon);
+        if (GameManager2.Instance.isMoving == true)
+        {
+            GameManager2.Instance.ListCheckSurroundHexagon.Add(currentBaseHexagon);
+            GameManager2.Instance.listCheckBlockHexagon.RemoveAll(x => x == currentBaseHexagon);
+
+        }
+        else
+        {
+            DOVirtual.DelayedCall(0.05f, () => GameManager2.Instance.CheckSurroundingHexagon(currentBaseHexagon));
+        }
+
+        //DOVirtual.DelayedCall(0.05f, () => GameManager2.Instance.CheckSurroundingHexagon(currentBaseHexagon));
+        //GameManager2.Instance.CheckSurroundingHexagon(currentBaseHexagon);
+
     }
 
     public void SetHeightCollider(float size)
@@ -145,13 +147,34 @@ public class ChipStack : MonoBehaviour
 
     public void RemoveTopChipBlock()
     {
-        if(listChipBlock.Count <= 1) currentBaseHexagon.ReMoveChipStack();
+        if (currentBaseHexagon == null) return;
+
+        if (listChipBlock.Count <= 1)
+        {
+            currentBaseHexagon.ReMoveChipStack();
+            currentBaseHexagon = null;
+        }
         else
         {
             Destroy(listChipBlock.Last().Block.gameObject);
             listChipBlock.RemoveAt(listChipBlock.Count - 1);
-            GameManager2.Instance.StackToCheck.Add(currentBaseHexagon);
+
+            if (!GameManager2.Instance.ListCheckSurroundHexagon.Contains(currentBaseHexagon))
+            {
+                GameManager2.Instance.ListCheckSurroundHexagon.Add(currentBaseHexagon);
+            }
         }
+
+        GameManager2.Instance.listCheckBlockHexagon.RemoveAll(x => x == currentBaseHexagon);
+
+        if (GameManager2.Instance.isMoving == false)
+        {
+            if (GameManager2.Instance.ListCheckSurroundHexagon.Count > 0 || GameManager2.Instance.listCheckBlockHexagon.Count > 0)
+            {
+                GameManager2.Instance.CheckRecallCheckSurround();
+            }
+        }
+
     }
 
 }

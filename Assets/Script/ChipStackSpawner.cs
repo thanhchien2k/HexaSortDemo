@@ -5,20 +5,11 @@ using Random = UnityEngine.Random;
 
 public class ChipStackSpawner : MonoBehaviour
 {
-    [SerializeField] float ChipSpacing;
     [SerializeField] ChipStack chipStackPrefabs;
     [SerializeField] int maxChipOfStack;
     [SerializeField] Transform[] listPosSpawn;
     private int currentCount;
 
-    private void Awake()
-    {
-        //listPosSpawn = new Transform[transform.childCount];
-        //for(int i =0; i< transform.childCount; i++)
-        //{
-        //    listPosSpawn[i] = transform.GetChild(i).transform;
-        //}
-    }
     private void Start()
     {
        SpawnChipStackInPos();
@@ -38,6 +29,7 @@ public class ChipStackSpawner : MonoBehaviour
         List<ChipType> chipTypes = new List<ChipType>(GameManager2.Instance.listType);
         Shuffle(chipTypes);
         int types = Random.Range(1, chipTypes.Count);
+
         for (int i = 0; i < types; i++)
         {
             CreateBlock(chip, chipTypes[i]);
@@ -52,7 +44,7 @@ public class ChipStackSpawner : MonoBehaviour
         int maxChipOfBlock = maxChipOfStack - currentCount;
         if (maxChipOfBlock <= 0) return;
         int count = Random.Range(2, maxChipOfBlock + 1);
-        //Debug.Log(count);
+
         GameObject chipBlock = new GameObject(nameof(_type)+" Block");
         chipBlock.transform.parent = stack.transform;
         chipBlock.transform.position = stack.transform.position;
@@ -60,7 +52,7 @@ public class ChipStackSpawner : MonoBehaviour
 
         ChipBlock block = new ChipBlock(chipBlock.transform, _type, count);
 
-        while (count >0) 
+        while (count > 0) 
         {
             GameObject newChip = Instantiate(GameManager2.Instance.chipsPrefabs[(int)_type], blockPos + Vector3.up * GameManager2.Instance.offset.y * currentCount, Quaternion.identity , chipBlock.transform);
             newChip.name = nameof(_type);
@@ -68,6 +60,7 @@ public class ChipStackSpawner : MonoBehaviour
             currentCount++;
             count--;
         }
+
         stack.listChipBlock.Add(block);
     }
 
@@ -86,7 +79,6 @@ public class ChipStackSpawner : MonoBehaviour
     {
         if (listPosSpawn.Length <= 0)
         {
-            Debug.Log("list position is empty");
             return false;
         }
 

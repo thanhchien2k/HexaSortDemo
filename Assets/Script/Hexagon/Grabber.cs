@@ -4,16 +4,11 @@ using UnityEngine;
 public class Grabber : MonoBehaviour
 {
     private ChipStack sellectGO;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
     void Update()
     {
-        if (GameManager2.Instance.isMoving) return;
+        //if (GameManager2.Instance.isMoving) return;
+
         if (Input.GetMouseButtonDown(0))
         {
             if (sellectGO == null)
@@ -28,7 +23,6 @@ public class Grabber : MonoBehaviour
                     Cursor.visible = false;
                 }
             }
-
         }
 
         if(sellectGO != null)
@@ -43,8 +37,6 @@ public class Grabber : MonoBehaviour
         {
              if(sellectGO != null)
             {
-                //Vector3 position = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.WorldToScreenPoint(sellectGO.gameObject.transform.position).z);
-                //Vector3 worldPos = Camera.main.ScreenToWorldPoint(position);
                 if(sellectGO.GetCurrentHexagon() != null)
                 {
                     sellectGO.PutOnHexagonBase();

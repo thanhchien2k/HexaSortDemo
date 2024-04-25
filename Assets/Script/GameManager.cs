@@ -157,12 +157,6 @@ public class GameManager : MonoBehaviour
 
             if (priorityPutOn == hexagon)
             {
-                //for (int i = 0; i < listCheck.Count; i++)
-                //{
-                //    Debug.Log("Move to put hexagon");
-                //    MoveChipBlock(listCheck[i], hexagon);
-                //    if (!StackToCheck.Contains(listCheck[i])) StackToCheck.Add(listCheck[i]);
-                //}
                 MoveListBlock(listCheck, hexagon, 0);
                 Debug.Log("hexagon is priproty");
             }
@@ -181,13 +175,6 @@ public class GameManager : MonoBehaviour
                 if (!StackToCheck.Contains(hexagon)) StackToCheck.Add(hexagon);
                 MoveChipBlock(hexagon, priorityPutOn);
             }
-
-            //DOVirtual.DelayedCall(0.5f, () =>
-            //{
-            //    priorityPutOn.CheckChipStack();
-            //});
-
-            //Debug.Log("end move");
 
         }
 
@@ -227,7 +214,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                putOnHexagon.CheckChipStack();
+                putOnHexagon.CheckTopStackOfHexagon();
             }
             return;
         }
@@ -260,14 +247,10 @@ public class GameManager : MonoBehaviour
         currentHexagon.currentChipStack.RemoveTopChipBlock();
     }
 
-    private void MoveChip(List<GameObject> chips,BaseHexagon currentHexagon ,BaseHexagon putOnHexagon, Vector3 position,int index, bool isCheck = false)
+    private void MoveChip(List<GameObject> chips,BaseHexagon currentHexagon ,BaseHexagon putOnHexagon, Vector3 position,int index)
     {
         if (index > chips.Count - 1)
         {
-            if(isCheck)
-            {
-                putOnHexagon.CheckChipStack();
-            }
             return;
         }
 
@@ -338,8 +321,8 @@ public class ChipBlock
         }
     }
 }
-[System.Serializable]
 
+[System.Serializable]
 public class HexagonCoordinate
 {
     public Vector2Int[] coordinate;

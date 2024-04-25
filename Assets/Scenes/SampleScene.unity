@@ -149,7 +149,7 @@ Transform:
   m_GameObject: {fileID: 606379293}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.02, z: -2}
+  m_LocalPosition: {x: 0, y: 0.5, z: -2.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -170,7 +170,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84e80086baeb2164e9a7281d8e233a06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ChipSpacing: 0.04
   chipStackPrefabs: {fileID: 240183960606097471, guid: 6c0dfed63618ba5448dc799f5059b8bd, type: 3}
   maxChipOfStack: 7
   listPosSpawn:
@@ -403,7 +402,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 1, z: 10}
+  m_LocalScale: {x: 20, y: 1, z: 20}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -662,6 +661,8 @@ MonoBehaviour:
   mapRoot: {fileID: 1503184851}
   size: {x: 4, y: 4}
   spawner: {fileID: 606379295}
+  timeChipMove: 0.25
+  timeDelayChipMove: 0.05
   neightborCoordinates:
   - coordinate:
     - {x: 0, y: -1}
