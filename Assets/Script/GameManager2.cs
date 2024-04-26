@@ -2,10 +2,7 @@ using DG.Tweening;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class GameManager2 : MonoBehaviour
 {
@@ -61,11 +58,13 @@ public class GameManager2 : MonoBehaviour
     {
         if (hexagonPrefabs == null || mapRoot == null) return;
         Vector3 worldPosition;
+
         if (size.x == 0 || size.y == 0)
         {
             Debug.Log("size is wrong!");
             return;
         }
+
         for (int x = 0; x < size.x; x++)
         {
             for (int y = 0; y < size.y; y++)
@@ -103,6 +102,7 @@ public class GameManager2 : MonoBehaviour
             CheckRecallCheckSurround();
             return;
         }
+
         // Search neightbor for hexagon 
         SetNeightborHexagon(hexagon);
 
@@ -115,9 +115,16 @@ public class GameManager2 : MonoBehaviour
             priorityPutOn = hexagon;
         }
 
-        foreach (var temp in hexagon.neightbors)
+        foreach (var temp in hexagon.Neightbors)
         {
-            if( temp.IsRemoveStack) continue;
+            if( temp.IsRemoveStack)
+            {
+                if (listCheck.Contains(temp))
+                {
+                    listCheck.Remove(temp);
+                }
+                continue;
+            }
 
             ChipStack check = temp.currentChipStack;
             if (check != null)
@@ -131,12 +138,15 @@ public class GameManager2 : MonoBehaviour
                     }
                     if (!listCheck.Contains(temp))
                     {
+
                         if (check.IsOneTypeStack() && priorityPutOn == null)
                         {
+                            Debug.Log(temp.name + "add priority");
                             priorityPutOn = temp;
                         }
                         else
                         {
+                            Debug.Log(temp.name + "add nomarl");
                             listCheck.Add(temp);
                         }
                     }
@@ -145,6 +155,7 @@ public class GameManager2 : MonoBehaviour
         }
 
         float timeDelay = 0f;
+        
 
         if (listCheck.Count != 0 || (priorityPutOn != null && priorityPutOn != hexagon))
         {
@@ -153,7 +164,7 @@ public class GameManager2 : MonoBehaviour
             {
                 for (int i = 0; i < listCheck.Count; i++)
                 {
-                    foreach (var temp in listCheck[i].neightbors)
+                    foreach (var temp in listCheck[i].Neightbors)
                     {
                         if (temp == hexagon || temp == priorityPutOn || temp.IsRemoveStack || temp.IsMoveStack) continue;
                         ChipStack check = temp.currentChipStack;
@@ -172,7 +183,7 @@ public class GameManager2 : MonoBehaviour
                 }
             }
 
-            // tim kiem hexagon de ci chuyen chip den
+            // tim kiem hexagon de di chuyen chip den
             if (priorityPutOn == null)
             {
                 List<BaseHexagon> checkSecondHexagon = new List<BaseHexagon>();
@@ -193,15 +204,18 @@ public class GameManager2 : MonoBehaviour
                         }
                     }
                 }
-                else
-                {
-                    priorityPutOn = hexagon;
-                }
+
+                Debug.Log("xet puton");
+                priorityPutOn = hexagon;
             }
+
+            //if(priorityPutOn == null)
+            //{
+            //    priorityPutOn = hexagon;
+            //}
 
             if (priorityPutOn.IsMoveStack)
             {
-                Debug.Log("return check");
                 if (!ListCheckSurroundHexagon.Contains(priorityPutOn)) ListCheckSurroundHexagon.Add(priorityPutOn);
                 return;
             }
@@ -231,7 +245,6 @@ public class GameManager2 : MonoBehaviour
     {
         if (ListCheckSurroundHexagon.Count > 0)
         {
-  
             CheckSurroundingHexagon(ListCheckSurroundHexagon.Last());
         }
         else
@@ -239,8 +252,6 @@ public class GameManager2 : MonoBehaviour
             // kiem tra removelist neu no khong rong thi se check stack tren do
             if(ListCheckBlockHexagon.Count > 0)
             {
-                //Debug.Log(listCheckBlockHexagon.First());
-
                 RemoveListTopStack(ListCheckBlockHexagon, 0);
             }
             else
@@ -259,21 +270,10 @@ public class GameManager2 : MonoBehaviour
             return;
         }
 
-        //if (hexagons[index] == null || hexagons[index].currentChipStack == null)
-        //{
-        //    RemoveListTopStack(hexagons, index + 1);
-        //}
-        Debug.Log(hexagons[index].name + " Remove");
-
         if (hexagons[index].currentChipStack == null)
         {
             RemoveListTopStack(hexagons, index + 1);
         }
-
-        //Debug.Log(hexagons[index]);
-        //Debug.Log(hexagons[index].currentChipStack);
-        //Debug.Log(hexagons[index].currentChipStack.listChipBlock.Last());
-        //Debug.Log(hexagons[index].currentChipStack.listChipBlock.Last().ListChip);
 
         hexagons[index].RemoveChipEffect(hexagons[index].currentChipStack.listChipBlock.Last().ListChip, 0);
         RemoveListTopStack(hexagons, index + 1);
@@ -334,7 +334,6 @@ public class GameManager2 : MonoBehaviour
         Vector3 targetPos = newHexagon.currentChipStack.GetTopPosition();
         ChipBlock moveChipBlock = currentHexagon.currentChipStack.listChipBlock.Last();
         newHexagon.currentChipStack.AddChipBlock(moveChipBlock);
-        Debug.Log("is moving");
         currentHexagon.IsMoveStack = true;
         putOnHexagon.IsMoveStack = true;
 
@@ -343,7 +342,6 @@ public class GameManager2 : MonoBehaviour
 
         MoveListChip(moveChipBlock.ListChip, currentHexagon, newHexagon, startPos,targetPos, rotate,0, () =>
         {
-            Debug.Log("stop moving");
             currentHexagon.IsMoveStack = false;
             putOnHexagon.IsMoveStack = false;
             MoveListBlock(listHexagon, putOnHexagon, index + 1, medialHexagon);
@@ -398,7 +396,6 @@ public class GameManager2 : MonoBehaviour
         {
             completed?.Invoke();
         });
-
     }
 
     private void MedialMoveChip(BaseHexagon curHexagon, BaseHexagon newHexagon)
@@ -419,7 +416,7 @@ public class GameManager2 : MonoBehaviour
 
     private void SetNeightborHexagon(BaseHexagon hexagon)
     {
-        if (hexagon.neightbors.Count <= 0)
+        if (hexagon.Neightbors.Count <= 0)
         {
             Vector2Int[] check = NeightborCoordinates[hexagon.Coordinate.x % 2].coordinate;
             for (int i = 0; i < check.Length; i++)
@@ -429,7 +426,7 @@ public class GameManager2 : MonoBehaviour
                 {
                     if (maps[checkCoordinate.x, checkCoordinate.y] != null)
                     {
-                        hexagon.neightbors.Add(maps[checkCoordinate.x, checkCoordinate.y]);
+                        hexagon.Neightbors.Add(maps[checkCoordinate.x, checkCoordinate.y]);
                     }
                 }
             }

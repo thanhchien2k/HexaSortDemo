@@ -103,7 +103,7 @@ public class GameManager : MonoBehaviour
             priorityPutOn = hexagon;
         }
 
-        foreach (var temp in hexagon.neightbors)
+        foreach (var temp in hexagon.Neightbors)
         {
             ChipStack check = temp.currentChipStack;
             if ( check != null)
@@ -131,7 +131,7 @@ public class GameManager : MonoBehaviour
             {
                 for (int i = 0; i < listCheck.Count; i++)
                 {
-                    if (listCheck[i].neightbors.Count == 0) continue;
+                    if (listCheck[i].Neightbors.Count == 0) continue;
                     List<BaseHexagon> checkHexagon = listCheck[i].CheckSecondType();
 
                     if(checkHexagon != null)
@@ -264,7 +264,7 @@ public class GameManager : MonoBehaviour
 
     private void SetNeightborHexagon(BaseHexagon hexagon)
     {
-        if (hexagon.neightbors.Count <= 0)
+        if (hexagon.Neightbors.Count <= 0)
         {
             Vector2Int[] check = neightborCoordinates[hexagon.Coordinate.x % 2].coordinate;
             for (int i = 0; i < check.Length; i++)
@@ -275,7 +275,7 @@ public class GameManager : MonoBehaviour
                 {
                     if (maps[checkCoordinate.x, checkCoordinate.y] != null)
                     {
-                        hexagon.neightbors.Add(maps[checkCoordinate.x, checkCoordinate.y]);
+                        hexagon.Neightbors.Add(maps[checkCoordinate.x, checkCoordinate.y]);
                     }
                 }
             }

@@ -28,7 +28,7 @@ public class ChipStack : MonoBehaviour
 
             if (hexagon != null)
             {
-                if (!hexagon.isPlaceable) {
+                if (!hexagon.IsPlaceable) {
                     if (currentBaseHexagon != null)
                     {
                         currentBaseHexagon.SetOriginal();
@@ -77,13 +77,15 @@ public class ChipStack : MonoBehaviour
             transform.SetParent(currentBaseHexagon.transform);
             transform.position = currentBaseHexagon.transform.position + (GameManager2.Instance.Offset.y * Vector3.up);
             currentBaseHexagon.SetOriginal();
-            currentBaseHexagon.isPlaceable = false;
+            currentBaseHexagon.IsPlaceable = false;
             currentBaseHexagon.currentChipStack = this;
 
             if(boxCollider != null)
             {
                 boxCollider.enabled = false;
             }
+
+           GameManager2.Instance.CheckSurroundingHexagon(currentBaseHexagon);
         }
 
         //if (GameManager2.Instance.IsMoving == true)
@@ -96,8 +98,7 @@ public class ChipStack : MonoBehaviour
         //    DOVirtual.DelayedCall(0.05f, () => GameManager2.Instance.CheckSurroundingHexagon(currentBaseHexagon));
         //}
 
-        DOVirtual.DelayedCall(0.05f, () => GameManager2.Instance.CheckSurroundingHexagon(currentBaseHexagon));
-        ////GameManager2.Instance.CheckSurroundingHexagon(currentBaseHexagon);
+        //GameManager2.Instance.CheckSurroundingHexagon(currentBaseHexagon);
 
     }
 
