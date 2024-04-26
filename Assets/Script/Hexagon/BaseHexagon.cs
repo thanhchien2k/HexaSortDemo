@@ -13,8 +13,8 @@ public class BaseHexagon : MonoBehaviour
     public bool isPlaceable = true;
     public List<BaseHexagon> neightbors { get; set; } = new List<BaseHexagon>();
     public Vector2Int Coordinate { get; set; }
-    public bool StackIsRemove { get; set; } = false;
-    public bool StackIsMoving {get; set; } = false;
+    public bool IsRemoveStack  = false;
+    public bool IsMoveStack  = false;
     public Vector3 GetWorldPosition() 
     { 
         return transform.position;
@@ -30,26 +30,26 @@ public class BaseHexagon : MonoBehaviour
         if (Renderer.material != originalMaterial) Renderer.material = originalMaterial;
     }
 
-    public void ReMoveChipStack()
-    {
-        ResetHexagon();
-    }
-
     public void CheckTopStackOfHexagon()
     {
         DOVirtual.DelayedCall(0.1f, () => 
         {
             if(currentChipStack == null) return;
-            if (currentChipStack.listChipBlock.Last().ChipCount >= GameManager2.Instance.numToRemoveBlock)
+            if (currentChipStack.listChipBlock.Last().ChipCount >= GameManager2.Instance.MaxToRemoveBlock)
             {
-                //RemoveChipEffect(currentChipStack.listChipBlock.Last().ListChip, 0, () =>
-                //{
-                //    currentChipStack.RemoveTopChipBlock();
-                //    GameManager2.Instance.CheckRecallCheckSurround();
-                //});
-                if(!GameManager2.Instance.listCheckBlockHexagon.Contains(this)) GameManager2.Instance.listCheckBlockHexagon.Add(this);
+                if(!GameManager2.Instance.ListCheckSurroundHexagon.Contains(this)) GameManager2.Instance.ListCheckSurroundHexagon.Add(this);
+                RemoveChipEffect(currentChipStack.listChipBlock.Last().ListChip, 0, () =>
+                {
+                    GameManager2.Instance.CheckRecallCheckSurround();
+                });
+                return;
             }
-            
+            else if ( currentChipStack.listChipBlock.Last().ChipCount >= GameManager2.Instance.MinToRemoveBlock)
+            {
+                if (!GameManager2.Instance.ListCheckBlockHexagon.Contains(this)) GameManager2.Instance.ListCheckBlockHexagon.Add(this);
+
+            }
+
             GameManager2.Instance.CheckRecallCheckSurround();
         });
 
@@ -57,25 +57,26 @@ public class BaseHexagon : MonoBehaviour
 
     public void RemoveChipEffect(List<GameObject> chips, int index, Action completed = null)
     {
-        if (StackIsRemove == false)
+        if (IsRemoveStack == false)
         {
-            StackIsRemove = true;
+            IsRemoveStack = true;
         }
         if (index > chips.Count - 1)
         {
+            // set isRemove first
+            IsRemoveStack = false;
             currentChipStack.RemoveTopChipBlock();
             completed?.Invoke();
-            StackIsRemove = false;
             return;
         }
 
-        chips[chips.Count - index - 1].transform.DOScale(Vector3.zero, 0.1f).SetEase(Ease.InOutSine).OnComplete(() =>
+        chips[chips.Count - index - 1].transform.DOScale(Vector3.zero, GameManager2.Instance.TimeRemoveChip).SetEase(Ease.InOutSine).OnComplete(() =>
         {
             RemoveChipEffect(chips, index + 1, completed);
         });
     }
 
-    private void ResetHexagon()
+    public void ResetHexagon()
     {
         Destroy(currentChipStack.gameObject);
         currentChipStack = null;

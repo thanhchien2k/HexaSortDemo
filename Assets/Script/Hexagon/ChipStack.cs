@@ -75,7 +75,7 @@ public class ChipStack : MonoBehaviour
         if(currentBaseHexagon != null)
         {
             transform.SetParent(currentBaseHexagon.transform);
-            transform.position = currentBaseHexagon.transform.position + (GameManager2.Instance.offset.y * Vector3.up);
+            transform.position = currentBaseHexagon.transform.position + (GameManager2.Instance.Offset.y * Vector3.up);
             currentBaseHexagon.SetOriginal();
             currentBaseHexagon.isPlaceable = false;
             currentBaseHexagon.currentChipStack = this;
@@ -86,19 +86,18 @@ public class ChipStack : MonoBehaviour
             }
         }
 
-        if (GameManager2.Instance.isMoving == true)
-        {
-            GameManager2.Instance.ListCheckSurroundHexagon.Add(currentBaseHexagon);
-            GameManager2.Instance.listCheckBlockHexagon.RemoveAll(x => x == currentBaseHexagon);
+        //if (GameManager2.Instance.IsMoving == true)
+        //{
+        //    GameManager2.Instance.ListCheckSurroundHexagon.Add(currentBaseHexagon);
+        //    GameManager2.Instance.ListCheckBlockHexagon.RemoveAll(x => x == currentBaseHexagon);
+        //}
+        //else
+        //{
+        //    DOVirtual.DelayedCall(0.05f, () => GameManager2.Instance.CheckSurroundingHexagon(currentBaseHexagon));
+        //}
 
-        }
-        else
-        {
-            DOVirtual.DelayedCall(0.05f, () => GameManager2.Instance.CheckSurroundingHexagon(currentBaseHexagon));
-        }
-
-        //DOVirtual.DelayedCall(0.05f, () => GameManager2.Instance.CheckSurroundingHexagon(currentBaseHexagon));
-        //GameManager2.Instance.CheckSurroundingHexagon(currentBaseHexagon);
+        DOVirtual.DelayedCall(0.05f, () => GameManager2.Instance.CheckSurroundingHexagon(currentBaseHexagon));
+        ////GameManager2.Instance.CheckSurroundingHexagon(currentBaseHexagon);
 
     }
 
@@ -132,7 +131,7 @@ public class ChipStack : MonoBehaviour
         {
             allChip += listChipBlock[i].ChipCount;
         }
-        return transform.position + (Vector3.up * GameManager2.Instance.offset.y * (allChip - 1));
+        return transform.position + (Vector3.up * GameManager2.Instance.Offset.y * (allChip - 1));
     }
 
     public void AddChipBlock(ChipBlock chipBlock)
@@ -147,11 +146,10 @@ public class ChipStack : MonoBehaviour
 
     public void RemoveTopChipBlock()
     {
-        if (currentBaseHexagon == null) return;
-
+        if (currentBaseHexagon == null || currentBaseHexagon.IsRemoveStack) return;
         if (listChipBlock.Count <= 1)
         {
-            currentBaseHexagon.ReMoveChipStack();
+            currentBaseHexagon.ResetHexagon();
             currentBaseHexagon = null;
         }
         else
@@ -165,11 +163,11 @@ public class ChipStack : MonoBehaviour
             }
         }
 
-        GameManager2.Instance.listCheckBlockHexagon.RemoveAll(x => x == currentBaseHexagon);
+        GameManager2.Instance.ListCheckBlockHexagon.RemoveAll(x => x == currentBaseHexagon);
 
-        if (GameManager2.Instance.isMoving == false)
+        if (GameManager2.Instance.IsMoving == false)
         {
-            if (GameManager2.Instance.ListCheckSurroundHexagon.Count > 0 || GameManager2.Instance.listCheckBlockHexagon.Count > 0)
+            if (GameManager2.Instance.ListCheckSurroundHexagon.Count > 0 || GameManager2.Instance.ListCheckBlockHexagon.Count > 0)
             {
                 GameManager2.Instance.CheckRecallCheckSurround();
             }
