@@ -2,6 +2,7 @@ using DG.Tweening;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 
 public class BaseHexagon : MonoBehaviour
@@ -9,16 +10,39 @@ public class BaseHexagon : MonoBehaviour
     [SerializeField] Material originalMaterial;
     [SerializeField] Material hightlightMaterial;
     [SerializeField] Renderer Renderer;
+    [SerializeField] TextMeshPro lockText;
     public ChipStack currentChipStack { get; set; }
-    public bool IsPlaceable { get; set; } = true;
+    public bool IsPlaceable = true;
+
+    private int lockPoint;
+    public int LockPoint {
+        get
+        {
+            return lockPoint;
+        }
+        set
+        {
+            if(lockText != null)
+            {
+                lockText.text = "Lock "+ value.ToString();
+            }
+            else
+            {
+                Debug.Log("Lock text is null");
+            }
+            IsPlaceable = false;
+            lockPoint = value;
+        }
+    }
     public List<BaseHexagon> Neightbors { get; set; } = new List<BaseHexagon>();
     public Vector2Int Coordinate { get; set; }
     public bool IsRemoveStack { get; set; } = false;
-    public bool IsMoveStack { get; set; } = false;
-    public Vector3 GetWorldPosition() 
-    { 
-        return transform.position;
-    }
+
+    //public bool IsMoveStack { get; set; } = false;
+    //public Vector3 GetWorldPosition() 
+    //{ 
+    //    return transform.position;
+    //}
 
     public void SetHeightLight()
     {
@@ -32,12 +56,11 @@ public class BaseHexagon : MonoBehaviour
 
     public void CheckTopStackOfHexagon()
     {
-        DOVirtual.DelayedCall(0.1f, () => 
+        DOVirtual.DelayedCall(0.05f, () => 
         {
             if(currentChipStack == null) return;
             if (currentChipStack.listChipBlock.Last().ChipCount >= GameManager2.Instance.MaxToRemoveBlock)
             {
-                Debug.Log("max");
                 RemoveChipEffect(currentChipStack.listChipBlock.Last().ListChip, 0, () =>
                 {
                     GameManager2.Instance.CheckRecallCheckSurround();
@@ -46,9 +69,8 @@ public class BaseHexagon : MonoBehaviour
             }
             else if ( currentChipStack.listChipBlock.Last().ChipCount >= GameManager2.Instance.MinToRemoveBlock)
             {
-                Debug.Log("min");
                 if (!GameManager2.Instance.ListCheckBlockHexagon.Contains(this)) GameManager2.Instance.ListCheckBlockHexagon.Add(this);
-
+                //if (GameManager2.Instance.ListCheckBlockHexagon.Contains(this)) GameManager2.Instance.ListCheckBlockHexagon.Add(this);
             }
 
             GameManager2.Instance.CheckRecallCheckSurround();
@@ -60,6 +82,7 @@ public class BaseHexagon : MonoBehaviour
         if (IsRemoveStack == false)
         {
             IsRemoveStack = true;
+            GameManager2.Instance.CurrentPoint += chips.Count;
         }
 
         if (index > chips.Count - 1)
@@ -91,6 +114,11 @@ public class BaseHexagon : MonoBehaviour
         IsPlaceable = true;
     }
 
+    public void UnlockHexagon()
+    {
+        lockText.gameObject.SetActive(false);
+        IsPlaceable = true;
+    }
     public List<BaseHexagon> CheckSecondType()
     {
         List<BaseHexagon> listSecondType = new List<BaseHexagon>();

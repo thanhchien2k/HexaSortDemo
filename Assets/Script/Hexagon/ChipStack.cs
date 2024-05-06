@@ -85,20 +85,17 @@ public class ChipStack : MonoBehaviour
                 boxCollider.enabled = false;
             }
 
-           GameManager2.Instance.CheckSurroundingHexagon(currentBaseHexagon);
+            //GameManager2.Instance.CheckSurroundingHexagon(currentBaseHexagon);
+            if (GameManager2.Instance.IsMoving == true)
+            {
+                GameManager2.Instance.ListCheckSurroundHexagon.Add(currentBaseHexagon);
+                GameManager2.Instance.ListCheckBlockHexagon.RemoveAll(x => x == currentBaseHexagon);
+            }
+            else
+            {
+                DOVirtual.DelayedCall(0.05f, () => GameManager2.Instance.CheckSurroundingHexagon(currentBaseHexagon));
+            }
         }
-
-        //if (GameManager2.Instance.IsMoving == true)
-        //{
-        //    GameManager2.Instance.ListCheckSurroundHexagon.Add(currentBaseHexagon);
-        //    GameManager2.Instance.ListCheckBlockHexagon.RemoveAll(x => x == currentBaseHexagon);
-        //}
-        //else
-        //{
-        //    DOVirtual.DelayedCall(0.05f, () => GameManager2.Instance.CheckSurroundingHexagon(currentBaseHexagon));
-        //}
-
-        //GameManager2.Instance.CheckSurroundingHexagon(currentBaseHexagon);
 
     }
 
@@ -168,10 +165,7 @@ public class ChipStack : MonoBehaviour
 
         if (GameManager2.Instance.IsMoving == false)
         {
-            if (GameManager2.Instance.ListCheckSurroundHexagon.Count > 0 || GameManager2.Instance.ListCheckBlockHexagon.Count > 0)
-            {
-                GameManager2.Instance.CheckRecallCheckSurround();
-            }
+            GameManager2.Instance.CheckRecallCheckSurround();
         }
 
     }

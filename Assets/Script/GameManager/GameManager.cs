@@ -282,48 +282,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void RemoveFromStack(BaseHexagon baseHexagon)
-    {
-        StackToCheck.RemoveAll(x => x == baseHexagon);
-    }
+
+
+
 
 }
 
-[System.Serializable]
-public enum ChipType
-{
-    Red,
-    Yellow,
-    Green,
-    Blue,
-    Null
-}
-[System.Serializable]
-public class ChipBlock
-{
-    public Transform Block;
-    public ChipType ChipType;
-    public int ChipCount;
-    public List<GameObject> ListChip;
-
-    public ChipBlock(Transform block, ChipType chipType, int chipCount, List<GameObject> listChip = null)
-    {
-        this.Block = block;
-        this.ChipType = chipType;
-        this.ChipCount = chipCount;
-        if(listChip == null)
-        {
-            this.ListChip = new();
-        }
-        else
-        {
-            this.ListChip = listChip;
-        }
-    }
-}
-
-[System.Serializable]
-public class HexagonCoordinate
-{
-    public Vector2Int[] coordinate;
-}

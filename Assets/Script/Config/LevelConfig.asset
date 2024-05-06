@@ -1,0 +1,111 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53f15b0ae76cae247a6451996d1e54cb, type: 3}
+  m_Name: LevelConfig
+  m_EditorClassIdentifier: 
+  PointComplete: 64000000c8000000c8000000c8000000fa0000002c0100002c010000
+  MapConfigs:
+  - HexagonConfigs:
+    - HexagonType: 0
+      Coordinate:
+      - {x: 0, y: 0}
+      - {x: 0, y: 4}
+      - {x: 1, y: 4}
+      - {x: 3, y: 4}
+      - {x: 4, y: 0}
+      - {x: 4, y: 4}
+      lockPoint: 
+  - HexagonConfigs:
+    - HexagonType: 0
+      Coordinate:
+      - {x: 0, y: 0}
+      - {x: 0, y: 4}
+      - {x: 1, y: 4}
+      - {x: 3, y: 4}
+      - {x: 4, y: 0}
+      - {x: 4, y: 4}
+      lockPoint: 
+  - HexagonConfigs:
+    - HexagonType: 0
+      Coordinate:
+      - {x: 0, y: 0}
+      - {x: 1, y: 4}
+      - {x: 3, y: 4}
+      - {x: 4, y: 0}
+      lockPoint: 
+  - HexagonConfigs:
+    - HexagonType: 0
+      Coordinate:
+      - {x: 0, y: 4}
+      - {x: 1, y: 4}
+      - {x: 2, y: 2}
+      - {x: 3, y: 4}
+      - {x: 4, y: 4}
+      lockPoint: 
+    - HexagonType: 2
+      Coordinate:
+      - {x: 0, y: 0}
+      - {x: 4, y: 0}
+      lockPoint: 
+  - HexagonConfigs:
+    - HexagonType: 0
+      Coordinate:
+      - {x: 0, y: 0}
+      - {x: 2, y: 0}
+      - {x: 4, y: 0}
+      lockPoint: 
+    - HexagonType: 2
+      Coordinate:
+      - {x: 1, y: 4}
+      - {x: 3, y: 4}
+      lockPoint: 
+  - HexagonConfigs:
+    - HexagonType: 0
+      Coordinate:
+      - {x: 1, y: 4}
+      - {x: 2, y: 4}
+      - {x: 3, y: 4}
+      lockPoint: 
+    - HexagonType: 2
+      Coordinate:
+      - {x: 2, y: 3}
+      lockPoint: 
+  - HexagonConfigs:
+    - HexagonType: 0
+      Coordinate:
+      - {x: 0, y: 4}
+      - {x: 1, y: 4}
+      - {x: 3, y: 4}
+      - {x: 4, y: 4}
+      lockPoint: 
+    - HexagonType: 2
+      Coordinate:
+      - {x: 0, y: 0}
+      - {x: 4, y: 0}
+      lockPoint: 
+    - HexagonType: 1
+      Coordinate:
+      - {x: 0, y: 3}
+      - {x: 1, y: 3}
+      - {x: 2, y: 3}
+      - {x: 2, y: 4}
+      - {x: 3, y: 3}
+      - {x: 4, y: 3}
+      lockPoint: 6400000096000000c8000000c8000000fa00000096000000
+  LevelSize:
+  - {x: 5, y: 5}
+  - {x: 5, y: 5}
+  - {x: 5, y: 5}
+  - {x: 5, y: 5}
+  - {x: 5, y: 5}
+  - {x: 5, y: 5}
+  - {x: 5, y: 5}
