@@ -74,9 +74,10 @@ public class ChipStack : MonoBehaviour
     {
         if(currentBaseHexagon != null)
         {
+         
+            currentBaseHexagon.SetOriginal();
             transform.SetParent(currentBaseHexagon.transform);
             transform.position = currentBaseHexagon.transform.position + (GameManager2.Instance.Offset.y * Vector3.up);
-            currentBaseHexagon.SetOriginal();
             currentBaseHexagon.IsPlaceable = false;
             currentBaseHexagon.currentChipStack = this;
 

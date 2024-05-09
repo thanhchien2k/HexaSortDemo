@@ -116,8 +116,13 @@ public class BaseHexagon : MonoBehaviour
 
     public void UnlockHexagon()
     {
-        lockText.gameObject.SetActive(false);
-        IsPlaceable = true;
+        if( lockText != null)
+        {
+            Destroy(lockText.gameObject);
+            GameManager2.Instance.listLockHexagon.Remove(this);
+            lockText = null;
+            IsPlaceable = true;
+        }
     }
     public List<BaseHexagon> CheckSecondType()
     {

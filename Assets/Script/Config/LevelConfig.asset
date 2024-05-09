@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53f15b0ae76cae247a6451996d1e54cb, type: 3}
   m_Name: LevelConfig
   m_EditorClassIdentifier: 
-  PointComplete: 64000000c8000000c8000000c8000000fa0000002c0100002c010000
+  PointComplete: 64000000c8000000c8000000c8000000fa0000002c0100002c0100002c0100002c0100002c010000900100002c0100002c0100002c0100002c0100002c010000400100005e010000fa00000090010000770100005e010000130100005e0100005e0100005e0100007c010000450100002c01000090010000c80000005e010000fa0000002c0100002c0100002c0100005e0100002c0100002c010000fa0000005e010000fa000000fa0000002c0100002c0100002c0100002c0100005e0100002c01000090010000
   MapConfigs:
   - HexagonConfigs:
     - HexagonType: 0
@@ -101,6 +101,886 @@ MonoBehaviour:
       - {x: 3, y: 3}
       - {x: 4, y: 3}
       lockPoint: 6400000096000000c8000000c8000000fa00000096000000
+  - HexagonConfigs:
+    - HexagonType: 0
+      Coordinate:
+      - {x: 0, y: 0}
+      - {x: 3, y: 4}
+      - {x: 4, y: 4}
+      lockPoint: 
+    - HexagonType: 2
+      Coordinate:
+      - {x: 1, y: 4}
+      lockPoint: 
+    - HexagonType: 1
+      Coordinate:
+      - {x: 2, y: 0}
+      - {x: 2, y: 1}
+      - {x: 3, y: 1}
+      - {x: 4, y: 2}
+      lockPoint: 6400000096000000c8000000fa000000
+  - HexagonConfigs:
+    - HexagonType: 0
+      Coordinate:
+      - {x: 0, y: 0}
+      - {x: 1, y: 4}
+      - {x: 3, y: 4}
+      - {x: 4, y: 0}
+      - {x: 4, y: 4}
+      lockPoint: 
+    - HexagonType: 2
+      Coordinate:
+      - {x: 0, y: 4}
+      lockPoint: 
+  - HexagonConfigs:
+    - HexagonType: 0
+      Coordinate:
+      - {x: 0, y: 0}
+      - {x: 1, y: 4}
+      - {x: 3, y: 4}
+      lockPoint: 
+    - HexagonType: 2
+      Coordinate:
+      - {x: 4, y: 4}
+      lockPoint: 
+  - HexagonConfigs:
+    - HexagonType: 1
+      Coordinate:
+      - {x: 0, y: 1}
+      - {x: 0, y: 3}
+      - {x: 1, y: 0}
+      - {x: 1, y: 3}
+      - {x: 2, y: 0}
+      - {x: 2, y: 4}
+      - {x: 3, y: 0}
+      - {x: 3, y: 3}
+      - {x: 4, y: 1}
+      - {x: 4, y: 3}
+      lockPoint: 3200000019000000c80000007d000000fa000000e100000096000000af0000004b00000064000000
+    - HexagonType: 2
+      Coordinate:
+      - {x: 1, y: 4}
+      - {x: 3, y: 4}
+      lockPoint: 
+  - HexagonConfigs:
+    - HexagonType: 0
+      Coordinate:
+      - {x: 1, y: 4}
+      - {x: 3, y: 4}
+      lockPoint: 
+    - HexagonType: 1
+      Coordinate:
+      - {x: 0, y: 1}
+      - {x: 0, y: 3}
+      - {x: 1, y: 0}
+      - {x: 1, y: 3}
+      - {x: 2, y: 0}
+      - {x: 2, y: 4}
+      - {x: 3, y: 0}
+      - {x: 3, y: 3}
+      - {x: 4, y: 1}
+      - {x: 4, y: 3}
+      lockPoint: 3200000019000000c80000007d000000fa000000e100000096000000af0000004b00000064000000
+    - HexagonType: 2
+      Coordinate:
+      - {x: 1, y: 4}
+      - {x: 3, y: 4}
+      lockPoint: 
+  - HexagonConfigs:
+    - HexagonType: 0
+      Coordinate:
+      - {x: 3, y: 4}
+      lockPoint: 
+    - HexagonType: 2
+      Coordinate:
+      - {x: 1, y: 4}
+      lockPoint: 
+    - HexagonType: 1
+      Coordinate:
+      - {x: 1, y: 1}
+      - {x: 1, y: 2}
+      - {x: 2, y: 1}
+      - {x: 2, y: 3}
+      - {x: 3, y: 1}
+      - {x: 3, y: 2}
+      lockPoint: af00000096000000320000007d0000004b00000064000000
+  - HexagonConfigs:
+    - HexagonType: 0
+      Coordinate:
+      - {x: 0, y: 2}
+      - {x: 0, y: 5}
+      - {x: 1, y: 4}
+      - {x: 1, y: 5}
+      - {x: 1, y: 5}
+      - {x: 3, y: 4}
+      - {x: 3, y: 5}
+      - {x: 4, y: 2}
+      - {x: 4, y: 5}
+      lockPoint: 
+    - HexagonType: 2
+      Coordinate:
+      - {x: 2, y: 5}
+      lockPoint: 
+  - HexagonConfigs:
+    - HexagonType: 0
+      Coordinate:
+      - {x: 1, y: 4}
+      - {x: 2, y: 0}
+      - {x: 3, y: 4}
+      lockPoint: 
+    - HexagonType: 2
+      Coordinate:
+      - {x: 2, y: 4}
+      lockPoint: 
+  - HexagonConfigs:
+    - HexagonType: 0
+      Coordinate:
+      - {x: 0, y: 0}
+      - {x: 0, y: 1}
+      - {x: 1, y: 0}
+      - {x: 1, y: 5}
+      - {x: 2, y: 0}
+      - {x: 2, y: 4}
+      - {x: 2, y: 5}
+      - {x: 3, y: 4}
+      - {x: 3, y: 5}
+      - {x: 4, y: 4}
+      - {x: 4, y: 5}
+      lockPoint: 
+    - HexagonType: 2
+      Coordinate:
+      - {x: 0, y: 2}
+      - {x: 2, y: 1}
+      - {x: 4, y: 3}
+      lockPoint: 
+  - HexagonConfigs:
+    - HexagonType: 0
+      Coordinate:
+      - {x: 0, y: 0}
+      - {x: 0, y: 1}
+      - {x: 0, y: 4}
+      - {x: 4, y: 0}
+      - {x: 4, y: 1}
+      - {x: 4, y: 4}
+      lockPoint: 
+    - HexagonType: 2
+      Coordinate:
+      - {x: 1, y: 4}
+      - {x: 3, y: 4}
+      lockPoint: 
+    - HexagonType: 1
+      Coordinate:
+      - {x: 2, y: 0}
+      - {x: 2, y: 4}
+      lockPoint: 6400000073000000
+  - HexagonConfigs:
+    - HexagonType: 0
+      Coordinate:
+      - {x: 2, y: 1}
+      - {x: 2, y: 3}
+      lockPoint: 
+    - HexagonType: 2
+      Coordinate:
+      - {x: 1, y: 4}
+      - {x: 3, y: 4}
+      lockPoint: 
+    - HexagonType: 1
+      Coordinate:
+      - {x: 0, y: 0}
+      - {x: 0, y: 1}
+      - {x: 0, y: 2}
+      - {x: 0, y: 3}
+      - {x: 0, y: 4}
+      - {x: 4, y: 0}
+      - {x: 4, y: 1}
+      - {x: 4, y: 2}
+      - {x: 4, y: 3}
+      - {x: 4, y: 4}
+      lockPoint: fa000000c80000006400000096000000320000004b0000007d000000af000000e100000013010000
+  - HexagonConfigs:
+    - HexagonType: 0
+      Coordinate:
+      - {x: 0, y: 0}
+      - {x: 2, y: 0}
+      - {x: 4, y: 0}
+      lockPoint: 
+    - HexagonType: 1
+      Coordinate:
+      - {x: 0, y: 2}
+      - {x: 0, y: 3}
+      - {x: 1, y: 2}
+      - {x: 2, y: 2}
+      - {x: 2, y: 3}
+      - {x: 3, y: 2}
+      - {x: 4, y: 2}
+      - {x: 4, y: 3}
+      lockPoint: 320000006400000096000000fa000000fa000000af0000007d0000004b000000
+  - HexagonConfigs:
+    - HexagonType: 0
+      Coordinate:
+      - {x: 1, y: 4}
+      - {x: 3, y: 4}
+      lockPoint: 
+    - HexagonType: 2
+      Coordinate:
+      - {x: 0, y: 0}
+      - {x: 0, y: 4}
+      - {x: 4, y: 0}
+      - {x: 4, y: 4}
+      lockPoint: 
+    - HexagonType: 1
+      Coordinate:
+      - {x: 1, y: 1}
+      - {x: 1, y: 2}
+      - {x: 2, y: 1}
+      - {x: 2, y: 2}
+      - {x: 2, y: 3}
+      - {x: 3, y: 1}
+      - {x: 3, y: 2}
+      lockPoint: 6400000096000000320000005e010000c80000002c010000fa000000
+  - HexagonConfigs:
+    - HexagonType: 0
+      Coordinate:
+      - {x: 0, y: 0}
+      - {x: 4, y: 0}
+      lockPoint: 
+    - HexagonType: 2
+      Coordinate:
+      - {x: 2, y: 0}
+      - {x: 4, y: 1}
+      lockPoint: 
+    - HexagonType: 1
+      Coordinate:
+      - {x: 0, y: 1}
+      - {x: 0, y: 2}
+      - {x: 1, y: 0}
+      - {x: 3, y: 0}
+      - {x: 4, y: 2}
+      - {x: 4, y: 3}
+      - {x: 4, y: 4}
+      lockPoint: 2c010000c8000000320000005e01000096000000fa00000064000000
+  - HexagonConfigs:
+    - HexagonType: 0
+      Coordinate:
+      - {x: 0, y: 0}
+      - {x: 1, y: 5}
+      - {x: 2, y: 2}
+      - {x: 2, y: 3}
+      - {x: 3, y: 5}
+      - {x: 4, y: 0}
+      lockPoint: 
+    - HexagonType: 2
+      Coordinate:
+      - {x: 0, y: 5}
+      - {x: 4, y: 5}
+      lockPoint: 
+    - HexagonType: 1
+      Coordinate:
+      - {x: 0, y: 2}
+      - {x: 0, y: 3}
+      - {x: 1, y: 2}
+      - {x: 3, y: 2}
+      - {x: 4, y: 2}
+      - {x: 4, y: 3}
+      lockPoint: 3200000096000000fa0000002c010000c800000064000000
+  - HexagonConfigs:
+    - HexagonType: 0
+      Coordinate:
+      - {x: 0, y: 0}
+      - {x: 1, y: 4}
+      - {x: 3, y: 4}
+      - {x: 4, y: 0}
+      lockPoint: 
+    - HexagonType: 2
+      Coordinate:
+      - {x: 0, y: 4}
+      - {x: 4, y: 4}
+      lockPoint: 
+  - HexagonConfigs:
+    - HexagonType: 0
+      Coordinate:
+      - {x: 0, y: 0}
+      - {x: 0, y: 5}
+      - {x: 1, y: 5}
+      - {x: 3, y: 5}
+      - {x: 4, y: 0}
+      - {x: 4, y: 5}
+      lockPoint: 
+    - HexagonType: 1
+      Coordinate:
+      - {x: 0, y: 1}
+      - {x: 0, y: 4}
+      - {x: 1, y: 1}
+      - {x: 1, y: 3}
+      - {x: 2, y: 2}
+      - {x: 2, y: 3}
+      - {x: 3, y: 1}
+      - {x: 3, y: 3}
+      - {x: 4, y: 1}
+      - {x: 4, y: 4}
+      lockPoint: 4b00000032000000af00000096000000fa0000002c0100007d000000c80000001900000064000000
+  - HexagonConfigs:
+    - HexagonType: 0
+      Coordinate:
+      - {x: 0, y: 0}
+      - {x: 0, y: 4}
+      - {x: 4, y: 0}
+      - {x: 4, y: 4}
+      lockPoint: 
+    - HexagonType: 1
+      Coordinate:
+      - {x: 1, y: 0}
+      - {x: 1, y: 1}
+      - {x: 1, y: 2}
+      - {x: 1, y: 3}
+      - {x: 3, y: 0}
+      - {x: 3, y: 1}
+      - {x: 3, y: 2}
+      - {x: 3, y: 3}
+      lockPoint: 1400000096000000fa000000320000001e0000002c010000c800000064000000
+    - HexagonType: 2
+      Coordinate:
+      - {x: 1, y: 4}
+      - {x: 3, y: 4}
+      lockPoint: 
+  - HexagonConfigs:
+    - HexagonType: 0
+      Coordinate:
+      - {x: 0, y: 0}
+      - {x: 1, y: 5}
+      - {x: 3, y: 5}
+      - {x: 4, y: 0}
+      lockPoint: 
+    - HexagonType: 1
+      Coordinate:
+      - {x: 1, y: 0}
+      - {x: 1, y: 4}
+      - {x: 2, y: 0}
+      - {x: 2, y: 1}
+      - {x: 2, y: 2}
+      - {x: 2, y: 3}
+      - {x: 2, y: 4}
+      - {x: 2, y: 5}
+      - {x: 3, y: 0}
+      - {x: 3, y: 4}
+      lockPoint: 6400000032000000c8000000fa0000002c01000013010000e1000000960000004b0000007d000000
+    - HexagonType: 2
+      Coordinate:
+      - {x: 0, y: 5}
+      - {x: 4, y: 5}
+      lockPoint: 
+  - HexagonConfigs:
+    - HexagonType: 0
+      Coordinate:
+      - {x: 0, y: 0}
+      - {x: 4, y: 0}
+      - {x: 3, y: 4}
+      lockPoint: 
+    - HexagonType: 2
+      Coordinate:
+      - {x: 4, y: 4}
+      lockPoint: 
+  - HexagonConfigs:
+    - HexagonType: 0
+      Coordinate:
+      - {x: 0, y: 0}
+      - {x: 0, y: 4}
+      - {x: 1, y: 4}
+      - {x: 3, y: 4}
+      - {x: 4, y: 0}
+      - {x: 4, y: 4}
+      lockPoint: 
+    - HexagonType: 1
+      Coordinate:
+      - {x: 0, y: 1}
+      - {x: 0, y: 2}
+      - {x: 0, y: 3}
+      - {x: 1, y: 0}
+      - {x: 1, y: 3}
+      - {x: 2, y: 0}
+      - {x: 2, y: 4}
+      - {x: 3, y: 0}
+      - {x: 3, y: 3}
+      - {x: 4, y: 1}
+      - {x: 4, y: 2}
+      - {x: 4, y: 3}
+      lockPoint: a0000000c8000000fa0000008c0000002c0100007800000014000000500000001e000000410000003200000028000000
+  - HexagonConfigs:
+    - HexagonType: 0
+      Coordinate:
+      - {x: 0, y: 0}
+      - {x: 1, y: 4}
+      - {x: 3, y: 4}
+      - {x: 4, y: 0}
+      lockPoint: 
+    - HexagonType: 2
+      Coordinate:
+      - {x: 0, y: 4}
+      - {x: 4, y: 4}
+      lockPoint: 
+  - HexagonConfigs:
+    - HexagonType: 1
+      Coordinate:
+      - {x: 0, y: 2}
+      - {x: 1, y: 2}
+      - {x: 2, y: 3}
+      - {x: 3, y: 2}
+      - {x: 4, y: 2}
+      lockPoint: 190000004b000000960000006400000032000000
+    - HexagonType: 2
+      Coordinate:
+      - {x: 0, y: 0}
+      - {x: 4, y: 0}
+      lockPoint: 
+  - HexagonConfigs:
+    - HexagonType: 0
+      Coordinate:
+      - {x: 0, y: 4}
+      - {x: 1, y: 4}
+      - {x: 3, y: 4}
+      - {x: 4, y: 4}
+      lockPoint: 
+    - HexagonType: 2
+      Coordinate:
+      - {x: 2, y: 4}
+      lockPoint: 
+  - HexagonConfigs:
+    - HexagonType: 0
+      Coordinate:
+      - {x: 2, y: 0}
+      - {x: 2, y: 1}
+      - {x: 2, y: 4}
+      lockPoint: 
+    - HexagonType: 2
+      Coordinate:
+      - {x: 0, y: 0}
+      - {x: 4, y: 0}
+      lockPoint: 
+    - HexagonType: 1
+      Coordinate:
+      - {x: 0, y: 1}
+      - {x: 0, y: 2}
+      - {x: 0, y: 3}
+      - {x: 0, y: 4}
+      - {x: 4, y: 1}
+      - {x: 4, y: 2}
+      - {x: 4, y: 3}
+      - {x: 4, y: 4}
+      lockPoint: 2800000078000000c80000001801000050000000a0000000f000000040010000
+  - HexagonConfigs:
+    - HexagonType: 0
+      Coordinate:
+      - {x: 1, y: 4}
+      - {x: 2, y: 0}
+      - {x: 2, y: 4}
+      - {x: 3, y: 4}
+      lockPoint: 
+    - HexagonType: 2
+      Coordinate:
+      - {x: 0, y: 2}
+      - {x: 4, y: 2}
+      lockPoint: 
+    - HexagonType: 1
+      Coordinate:
+      - {x: 1, y: 2}
+      - {x: 2, y: 2}
+      - {x: 2, y: 3}
+      - {x: 3, y: 2}
+      lockPoint: 32000000e1000000c80000007d000000
+  - HexagonConfigs:
+    - HexagonType: 0
+      Coordinate:
+      - {x: 0, y: 0}
+      - {x: 0, y: 5}
+      - {x: 1, y: 0}
+      - {x: 1, y: 5}
+      - {x: 2, y: 0}
+      - {x: 2, y: 3}
+      - {x: 3, y: 2}
+      - {x: 3, y: 5}
+      - {x: 4, y: 2}
+      - {x: 4, y: 5}
+      - {x: 5, y: 4}
+      - {x: 5, y: 5}
+      - {x: 6, y: 0}
+      - {x: 6, y: 5}
+      lockPoint: 
+    - HexagonType: 2
+      Coordinate:
+      - {x: 0, y: 1}
+      - {x: 5, y: 4}
+      lockPoint: 
+  - HexagonConfigs:
+    - HexagonType: 0
+      Coordinate:
+      - {x: 0, y: 0}
+      - {x: 0, y: 1}
+      - {x: 0, y: 4}
+      - {x: 1, y: 0}
+      - {x: 2, y: 0}
+      - {x: 3, y: 5}
+      - {x: 4, y: 0}
+      - {x: 4, y: 5}
+      lockPoint: 
+    - HexagonType: 2
+      Coordinate:
+      - {x: 1, y: 3}
+      - {x: 3, y: 2}
+      lockPoint: 
+  - HexagonConfigs:
+    - HexagonType: 0
+      Coordinate:
+      - {x: 0, y: 0}
+      - {x: 0, y: 1}
+      - {x: 0, y: 2}
+      - {x: 1, y: 0}
+      - {x: 1, y: 2}
+      - {x: 1, y: 6}
+      - {x: 2, y: 0}
+      - {x: 2, y: 3}
+      - {x: 2, y: 6}
+      - {x: 3, y: 3}
+      - {x: 3, y: 5}
+      - {x: 3, y: 6}
+      - {x: 4, y: 4}
+      - {x: 4, y: 5}
+      - {x: 4, y: 6}
+      lockPoint: 
+    - HexagonType: 2
+      Coordinate:
+      - {x: 0, y: 6}
+      - {x: 4, y: 0}
+      lockPoint: 
+  - HexagonConfigs:
+    - HexagonType: 0
+      Coordinate:
+      - {x: 0, y: 0}
+      - {x: 1, y: 6}
+      - {x: 2, y: 0}
+      - {x: 2, y: 6}
+      - {x: 3, y: 6}
+      - {x: 4, y: 0}
+      lockPoint: 
+    - HexagonType: 2
+      Coordinate:
+      - {x: 0, y: 6}
+      - {x: 4, y: 6}
+      lockPoint: 
+    - HexagonType: 1
+      Coordinate:
+      - {x: 0, y: 1}
+      - {x: 0, y: 3}
+      - {x: 1, y: 1}
+      - {x: 1, y: 3}
+      - {x: 2, y: 1}
+      - {x: 2, y: 2}
+      - {x: 2, y: 3}
+      - {x: 2, y: 4}
+      - {x: 2, y: 5}
+      - {x: 3, y: 2}
+      - {x: 3, y: 4}
+      - {x: 4, y: 3}
+      - {x: 4, y: 5}
+      lockPoint: 0a000000640000002800000096000000c8000000eb0000000e0100002c010000540100007e0000003c0000005000000019000000
+  - HexagonConfigs:
+    - HexagonType: 0
+      Coordinate:
+      - {x: 0, y: 0}
+      - {x: 1, y: 5}
+      - {x: 2, y: 0}
+      - {x: 3, y: 5}
+      - {x: 4, y: 0}
+      lockPoint: 
+    - HexagonType: 2
+      Coordinate:
+      - {x: 2, y: 2}
+      - {x: 2, y: 5}
+      lockPoint: 
+    - HexagonType: 1
+      Coordinate:
+      - {x: 0, y: 2}
+      - {x: 1, y: 2}
+      - {x: 3, y: 2}
+      - {x: 4, y: 2}
+      lockPoint: 320000006400000096000000c8000000
+  - HexagonConfigs:
+    - HexagonType: 0
+      Coordinate:
+      - {x: 0, y: 5}
+      - {x: 0, y: 6}
+      - {x: 1, y: 5}
+      - {x: 1, y: 6}
+      - {x: 2, y: 0}
+      - {x: 2, y: 6}
+      - {x: 2, y: 6}
+      - {x: 3, y: 0}
+      - {x: 3, y: 6}
+      - {x: 4, y: 0}
+      - {x: 4, y: 1}
+      lockPoint: 
+    - HexagonType: 2
+      Coordinate:
+      - {x: 0, y: 0}
+      - {x: 4, y: 6}
+      lockPoint: 
+    - HexagonType: 1
+      Coordinate:
+      - {x: 0, y: 2}
+      - {x: 1, y: 1}
+      - {x: 1, y: 2}
+      - {x: 2, y: 1}
+      - {x: 2, y: 3}
+      - {x: 2, y: 5}
+      - {x: 3, y: 3}
+      - {x: 3, y: 4}
+      - {x: 4, y: 4}
+      lockPoint: 280000006e000000af0000003c000000fa00000050000000d20000008c00000014000000
+  - HexagonConfigs:
+    - HexagonType: 0
+      Coordinate:
+      - {x: 0, y: 0}
+      - {x: 0, y: 4}
+      - {x: 1, y: 0}
+      - {x: 1, y: 4}
+      - {x: 2, y: 0}
+      - {x: 3, y: 1}
+      - {x: 3, y: 3}
+      - {x: 4, y: 0}
+      - {x: 5, y: 0}
+      - {x: 5, y: 4}
+      - {x: 6, y: 0}
+      - {x: 6, y: 4}
+      lockPoint: 
+    - HexagonType: 2
+      Coordinate:
+      - {x: 0, y: 1}
+      - {x: 6, y: 1}
+      lockPoint: 
+  - HexagonConfigs:
+    - HexagonType: 0
+      Coordinate:
+      - {x: 0, y: 0}
+      - {x: 1, y: 2}
+      - {x: 2, y: 3}
+      - {x: 3, y: 2}
+      - {x: 4, y: 0}
+      lockPoint: 
+    - HexagonType: 2
+      Coordinate:
+      - {x: 1, y: 4}
+      - {x: 3, y: 4}
+      lockPoint: 
+    - HexagonType: 1
+      Coordinate:
+      - {x: 0, y: 2}
+      - {x: 0, y: 3}
+      - {x: 2, y: 2}
+      - {x: 4, y: 2}
+      - {x: 4, y: 3}
+      lockPoint: 3200000064000000fa000000c800000096000000
+  - HexagonConfigs:
+    - HexagonType: 0
+      Coordinate:
+      - {x: 1, y: 4}
+      - {x: 2, y: 0}
+      - {x: 3, y: 4}
+      lockPoint: 
+    - HexagonType: 2
+      Coordinate:
+      - {x: 0, y: 0}
+      lockPoint: 
+    - HexagonType: 1
+      Coordinate:
+      - {x: 0, y: 4}
+      - {x: 1, y: 3}
+      - {x: 2, y: 3}
+      - {x: 2, y: 2}
+      - {x: 3, y: 3}
+      - {x: 4, y: 4}
+      lockPoint: 1900000032000000c80000004b0000006400000096000000
+  - HexagonConfigs:
+    - HexagonType: 0
+      Coordinate:
+      - {x: 0, y: 0}
+      - {x: 1, y: 0}
+      - {x: 1, y: 5}
+      - {x: 2, y: 0}
+      - {x: 2, y: 5}
+      - {x: 3, y: 4}
+      - {x: 3, y: 5}
+      - {x: 4, y: 5}
+      lockPoint: 
+    - HexagonType: 2
+      Coordinate:
+      - {x: 0, y: 1}
+      - {x: 0, y: 5}
+      lockPoint: 
+    - HexagonType: 1
+      Coordinate:
+      - {x: 1, y: 1}
+      - {x: 1, y: 2}
+      - {x: 1, y: 3}
+      - {x: 1, y: 4}
+      lockPoint: 320000006400000096000000c8000000
+  - HexagonConfigs:
+    - HexagonType: 0
+      Coordinate:
+      - {x: 0, y: 5}
+      - {x: 1, y: 5}
+      - {x: 3, y: 5}
+      - {x: 4, y: 5}
+      lockPoint: 
+    - HexagonType: 2
+      Coordinate:
+      - {x: 0, y: 0}
+      - {x: 4, y: 0}
+      lockPoint: 
+  - HexagonConfigs:
+    - HexagonType: 0
+      Coordinate:
+      - {x: 1, y: 4}
+      - {x: 3, y: 4}
+      lockPoint: 
+    - HexagonType: 2
+      Coordinate:
+      - {x: 2, y: 2}
+      lockPoint: 
+  - HexagonConfigs:
+    - HexagonType: 0
+      Coordinate:
+      - {x: 0, y: 0}
+      - {x: 1, y: 2}
+      - {x: 1, y: 5}
+      - {x: 2, y: 0}
+      - {x: 2, y: 3}
+      - {x: 3, y: 2}
+      - {x: 3, y: 5}
+      - {x: 4, y: 0}
+      lockPoint: 
+    - HexagonType: 1
+      Coordinate:
+      - {x: 1, y: 0}
+      - {x: 1, y: 4}
+      - {x: 2, y: 1}
+      - {x: 2, y: 5}
+      - {x: 3, y: 0}
+      - {x: 3, y: 4}
+      lockPoint: 7d0000001e0000009600000032000000c800000050000000
+  - HexagonConfigs:
+    - HexagonType: 0
+      Coordinate:
+      - {x: 0, y: 0}
+      - {x: 0, y: 5}
+      - {x: 1, y: 5}
+      - {x: 3, y: 5}
+      - {x: 4, y: 0}
+      lockPoint: 
+    - HexagonType: 2
+      Coordinate:
+      - {x: 0, y: 1}
+      - {x: 4, y: 5}
+      lockPoint: 
+    - HexagonType: 1
+      Coordinate:
+      - {x: 0, y: 4}
+      - {x: 1, y: 2}
+      - {x: 2, y: 1}
+      - {x: 2, y: 5}
+      - {x: 3, y: 3}
+      - {x: 4, y: 2}
+      lockPoint: 320000002c010000c800000096000000fa00000064000000
+  - HexagonConfigs:
+    - HexagonType: 0
+      Coordinate:
+      - {x: 1, y: 6}
+      - {x: 3, y: 6}
+      - {x: 4, y: 0}
+      - {x: 4, y: 6}
+      lockPoint: 
+    - HexagonType: 2
+      Coordinate:
+      - {x: 0, y: 0}
+      - {x: 0, y: 6}
+      lockPoint: 
+    - HexagonType: 1
+      Coordinate:
+      - {x: 0, y: 1}
+      - {x: 0, y: 5}
+      - {x: 1, y: 1}
+      - {x: 1, y: 4}
+      - {x: 2, y: 2}
+      - {x: 2, y: 4}
+      - {x: 3, y: 2}
+      - {x: 3, y: 3}
+      - {x: 4, y: 3}
+      lockPoint: f000000028000000b400000050000000780000004b0000003c0000005a0000001e000000
+  - HexagonConfigs:
+    - HexagonType: 0
+      Coordinate:
+      - {x: 0, y: 0}
+      - {x: 0, y: 2}
+      - {x: 0, y: 3}
+      - {x: 0, y: 4}
+      - {x: 0, y: 5}
+      - {x: 1, y: 0}
+      - {x: 1, y: 4}
+      - {x: 1, y: 5}
+      - {x: 2, y: 0}
+      - {x: 2, y: 5}
+      - {x: 4, y: 0}
+      - {x: 4, y: 5}
+      - {x: 5, y: 0}
+      - {x: 5, y: 4}
+      - {x: 5, y: 5}
+      - {x: 6, y: 0}
+      - {x: 6, y: 2}
+      - {x: 6, y: 3}
+      - {x: 6, y: 4}
+      - {x: 6, y: 5}
+      lockPoint: 
+    - HexagonType: 2
+      Coordinate:
+      - {x: 0, y: 1}
+      - {x: 3, y: 5}
+      - {x: 6, y: 1}
+      lockPoint: 
+  - HexagonConfigs:
+    - HexagonType: 0
+      Coordinate:
+      - {x: 0, y: 0}
+      - {x: 0, y: 6}
+      - {x: 1, y: 6}
+      - {x: 3, y: 6}
+      - {x: 4, y: 0}
+      - {x: 4, y: 6}
+      lockPoint: 
+    - HexagonType: 2
+      Coordinate:
+      - {x: 0, y: 3}
+      - {x: 4, y: 3}
+      lockPoint: 
+    - HexagonType: 1
+      Coordinate:
+      - {x: 0, y: 1}
+      - {x: 0, y: 2}
+      - {x: 0, y: 4}
+      - {x: 0, y: 5}
+      - {x: 1, y: 0}
+      - {x: 1, y: 2}
+      - {x: 1, y: 3}
+      - {x: 1, y: 5}
+      - {x: 2, y: 0}
+      - {x: 2, y: 3}
+      - {x: 2, y: 6}
+      - {x: 3, y: 0}
+      - {x: 3, y: 2}
+      - {x: 3, y: 3}
+      - {x: 3, y: 5}
+      - {x: 4, y: 1}
+      - {x: 4, y: 2}
+      - {x: 4, y: 4}
+      - {x: 4, y: 5}
+      lockPoint: 500000003200000018010000f0000000780000001400000045010000b4000000a0000000770100008c000000c80000005e0100000a00000064000000040100002c0100002300000041000000
   LevelSize:
   - {x: 5, y: 5}
   - {x: 5, y: 5}
@@ -109,3 +989,46 @@ MonoBehaviour:
   - {x: 5, y: 5}
   - {x: 5, y: 5}
   - {x: 5, y: 5}
+  - {x: 5, y: 5}
+  - {x: 5, y: 5}
+  - {x: 5, y: 5}
+  - {x: 5, y: 5}
+  - {x: 5, y: 5}
+  - {x: 5, y: 5}
+  - {x: 5, y: 6}
+  - {x: 5, y: 5}
+  - {x: 5, y: 6}
+  - {x: 5, y: 5}
+  - {x: 5, y: 5}
+  - {x: 5, y: 5}
+  - {x: 5, y: 5}
+  - {x: 5, y: 5}
+  - {x: 5, y: 6}
+  - {x: 5, y: 5}
+  - {x: 5, y: 6}
+  - {x: 5, y: 5}
+  - {x: 5, y: 6}
+  - {x: 5, y: 5}
+  - {x: 5, y: 5}
+  - {x: 5, y: 5}
+  - {x: 5, y: 5}
+  - {x: 5, y: 5}
+  - {x: 5, y: 5}
+  - {x: 5, y: 5}
+  - {x: 7, y: 6}
+  - {x: 5, y: 6}
+  - {x: 5, y: 7}
+  - {x: 5, y: 7}
+  - {x: 5, y: 6}
+  - {x: 5, y: 7}
+  - {x: 7, y: 5}
+  - {x: 5, y: 6}
+  - {x: 5, y: 5}
+  - {x: 5, y: 6}
+  - {x: 5, y: 6}
+  - {x: 5, y: 5}
+  - {x: 5, y: 6}
+  - {x: 5, y: 6}
+  - {x: 5, y: 7}
+  - {x: 7, y: 6}
+  - {x: 5, y: 7}

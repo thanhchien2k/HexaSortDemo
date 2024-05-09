@@ -2,14 +2,13 @@ using DG.Tweening;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using TMPro;
 using UnityEngine;
 
 public class GameManager2 : MonoBehaviour
 {
     public static GameManager2 Instance;
     private BaseHexagon[,] maps;
-    List<BaseHexagon> listLockHexagon = new();
+    public List<BaseHexagon> listLockHexagon { get; private set; }
     [Header("Hexagon Prefabs")]
     [SerializeField] BaseHexagon hexagonPrefabs;
     [SerializeField] BaseHexagon LockhexagonPrefabs;
@@ -32,10 +31,10 @@ public class GameManager2 : MonoBehaviour
     public List<Material> ListMaterials;
 
     [Header("UI")]
-    [SerializeField] TextMeshProUGUI pointText;
+    [SerializeField] GamePlayUI gamePlayUI;
 
     [Header("Level")]
-    public int CurrentLevel;
+    public int CurrentLevelID;
     [SerializeField] LevelConfigs LevelConfig;
     MapConfig mapConfig;
     private int completedPoint;
@@ -49,8 +48,7 @@ public class GameManager2 : MonoBehaviour
 
         set
         {
-
-            pointText.text = value.ToString() + " / " + completedPoint;
+            gamePlayUI.UpdateUI(value, completedPoint);
             currentPoint = value;
             CheckLockHexagon();
         }
@@ -81,9 +79,12 @@ public class GameManager2 : MonoBehaviour
 
     private void Start()
     {
-        completedPoint = LevelConfig.PointComplete[CurrentLevel];
-        mapConfig = LevelConfig.MapConfigs[CurrentLevel];
-        mapSize = LevelConfig.LevelSize[CurrentLevel];
+        //PlayerPrefs.SetInt("LevelID", 0);
+        CurrentLevelID = GameData.CurrentLevelID;
+        listLockHexagon = new();
+        completedPoint = LevelConfig.PointComplete[CurrentLevelID];
+        mapConfig = LevelConfig.MapConfigs[CurrentLevelID];
+        mapSize = LevelConfig.LevelSize[CurrentLevelID];
         maps = new BaseHexagon[mapSize.x, mapSize.y];
         CurrentPoint = 0;
 
@@ -170,6 +171,7 @@ public class GameManager2 : MonoBehaviour
 
                 if(lockIndex != -1)
                 {
+                    Debug.Log("add");
                     maps[x, y].LockPoint = lockPoint[lockIndex];
                     listLockHexagon.Add(maps[x, y]);
                 }
@@ -349,11 +351,27 @@ public class GameManager2 : MonoBehaviour
             }
 
             IsMoving = false;
-            //else
-            //{
-            //    IsMoving = false;
-            //}
+            
+            if(IsMoving == false)
+            {
+                if (!IsCanPutHexagon())
+                {
+                    gamePlayUI.PopupLose();
+                }
+            }
         }
+    }
+
+    public void HideMap()
+    {
+        mapRoot.gameObject.SetActive(false);
+        spawner.gameObject.SetActive(false);
+    }
+
+    public void DisplayMap()
+    {
+        mapRoot.gameObject.SetActive(true);
+        spawner.gameObject.SetActive(true);
     }
 
     private void RemoveListTopStack(List<BaseHexagon> hexagons, int index)
@@ -567,12 +585,27 @@ public class GameManager2 : MonoBehaviour
             if (listLockHexagon[i].LockPoint <= currentPoint)
             {
                 listLockHexagon[i].UnlockHexagon();
-                listLockHexagon.RemoveAt(i);
             }
         }
     }
 
+    private bool IsCanPutHexagon()
+    {
+        foreach (var item in maps)
+        {
+            if (item == null) continue;
+            if (item.IsPlaceable == false) continue;
+            else
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 }
+
 
 [System.Serializable]
 public enum ChipType

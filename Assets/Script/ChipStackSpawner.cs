@@ -16,7 +16,7 @@ public class ChipStackSpawner : MonoBehaviour
     public void SpawnChipStackInPos()
     {
         currentProgress = GameManager2.Instance.GetCurrentProgress();
-        curLevel = GameManager2.Instance.CurrentLevel;
+        curLevel = GameManager2.Instance.CurrentLevelID;
         int indexOfProgres = GetIndexOfProgress(currentProgress);
 
         for (int i = 0; i < listPosSpawn.Length; i++)
@@ -35,12 +35,12 @@ public class ChipStackSpawner : MonoBehaviour
         //maxType = genStackConfig.genConfigs[indexOfProgres].maxType;
         //Debug.Log(maxType);
 
-        if (curLevel == 1) maxType = 4;
+        if (curLevel == 0) maxType = 4;
         else
         {
             maxType = genStackConfig.genConfigs[indexOfProgres].maxType;
 
-            if (curLevel > 1 && curLevel < 5 && maxType > 6)
+            if (curLevel >= 1 && curLevel < 5 && maxType > 6)
             {
                 maxType = 6;
             }
